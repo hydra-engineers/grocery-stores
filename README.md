@@ -25,7 +25,9 @@ This section contains information about api wrappers for different stores.
   - typescript
 
 > **note**
+>
 > execute the following command to update all dependencies for each wrapper
+>
 > `pnpm add axios date-fns && pnpm add --save-dev @rollup/plugin-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser @types/jest @types/node @types/node-fetch dotenv rollup prettier jest ts-jest ts-node tslib typescript && pnpm update *@latest`
 
 ### Scripts
