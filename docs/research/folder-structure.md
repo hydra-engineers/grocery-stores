@@ -3,7 +3,6 @@
 ## comparison queue
 
 ### Shared
-- package.json
 
 ### albert-heijn
 - src/
@@ -44,7 +43,6 @@
     - recipe.test.ts
     - store.test.ts
 - .eslintrc.js
-- .gitattributes
 
 ### aldi
 - src/
@@ -154,7 +152,6 @@
     - user.test.ts
 - .env.example
 - .eslintrc.js
-- .gitattributes
 
 ### plus
 - src/
@@ -190,5 +187,13 @@
     - workflows/
         - publish.yml
         - test.yml
+- .gitattributes
 - .gitignore
+- .npmignore
+- .nvmrc
+- .prettierrc
+- jest.config.ts
+- package.json
 - README.md
+- rollup.config.js
+- tsconfig.json

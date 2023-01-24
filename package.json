@@ -1,0 +1,28 @@
+{
+    "name": "api-wrappers-migrate",
+    "author": "Hayo Bouma <hbouma01@gmail.com>",
+    "version": "0.0.0",
+    "description": "This repo contains all the api wrappers migrated into one.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "lint": "eslint --ext .ts,.js .",
+        "build": "rollup --config rollup.config.ts --configPlugin typescript",
+        "start": "ts-node src/index.ts",
+        "dev": "ts-node src/test.ts",
+        "test": "jest"
+    },
+    "keywords": [],
+    "license": "GPL-3.0-or-later",
+    "directories": {
+        "doc": "docs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cheap-shoppers/api-wrapper-migrate.git"
+    },
+    "bugs": {
+        "url": "https://github.com/cheap-shoppers/api-wrapper-migrate/issues"
+    },
+    "homepage": "https://github.com/cheap-shoppers/api-wrapper-migrate#readme"
+}
