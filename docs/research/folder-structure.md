@@ -3,7 +3,6 @@
 ## comparison queue
 
 ### Shared
-- .nvmrc
 - .prettierrc
 - jest.config.ts
 - package.json
