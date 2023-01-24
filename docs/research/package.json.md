@@ -23,7 +23,7 @@ this contains research on the package.json files within each wrapper
 > execute the following command to update all devDependencies for each wrapper
 >
 > ```
-> pnpm add --save-dev @rollup/plugin-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser @types/jest @types/node @types/node-fetch dotenv rollup prettier jest ts-jest ts-node tslib typescript && pnpm update *@latest
+> pnpm add --save-dev eslint @rollup/plugin-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser @types/jest @types/node @types/node-fetch dotenv rollup prettier jest ts-jest ts-node tslib typescript && pnpm update *@latest
 > ```
 
 - @rollup/plugin-typescript (v11.0.0)
@@ -33,6 +33,7 @@ this contains research on the package.json files within each wrapper
 - @types/node (v18.11.18)
 - @types/node-fetch (v2.6.2)
 - dotenv (v16.0.3)
+- eslint (v8.32.0)
 - rollup (v3.10.1)
 - prettier (v2.8.3)
 - jest (v29.4.0)
