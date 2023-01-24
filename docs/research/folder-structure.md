@@ -1,0 +1,200 @@
+# Folder Structure
+
+## comparison queue
+
+### Shared
+- .npmignore
+- .nvmrc
+- .prettierrc
+- jest.config.ts
+- package.json
+- rollup.config.js
+- tsconfig.json
+
+### albert-heijn
+- src/
+    - auth/
+        - tokenHandler.ts
+    - base/
+        - AHObject.ts
+    - bonus/
+        - index.ts
+        - bonus.ts
+        - bonusModel.ts
+    - category/
+        - index.ts
+        - category.ts
+        - categoryModel.ts
+    - product/
+        - index.ts
+        - product.ts
+        - productModel.ts
+        - productQueryModel.ts
+    - recipe/
+        - index.ts
+        - recipe.ts
+        - recipeModel.ts
+        - recipeQueryModel.ts
+    - store/
+        - index.ts
+        - store.ts
+        - storeModel.ts
+    - ah.ts
+    - index.ts
+- test/
+    - auth.test.ts
+    - bonus.test.ts
+    - category.test.ts
+    - index.test.ts
+    - product.test.ts
+    - recipe.test.ts
+    - store.test.ts
+- .eslintrc.js
+- .gitattributes
+
+### aldi
+- src/
+    - base/
+        - aldiObject.ts
+    - product/
+        - index.ts
+        - product.ts
+        - productModel.ts
+    - promotion/
+        - index.ts
+        - promotion.ts
+        - promotionModel.ts
+    - recipe/
+        - index.ts
+        - recipe.ts
+        - recipeModel.ts
+    - aldi.ts
+    - index.ts
+- test/
+    - index.test.ts
+    - product.test.ts
+    - promotion.test.ts
+    - recipe.test.ts
+
+### coop
+- src/
+    - base/
+        - coopObject.ts
+    - product/
+        - index.ts
+        - product.ts
+        - productModel.ts
+    - recipe/
+        - index.ts
+        - recipe.ts
+        - recipeModel.ts
+    - coop.ts
+    - index.ts
+- test/
+    - index.test.ts
+    - product.test.ts
+    - recipe.test.ts
+
+### jumbo
+- src/
+    - auth/
+        - tokenHandler.ts
+    - base/
+        - jumboObject.ts
+    - basket/
+        - index.ts
+        - basket.ts
+        - basketModel.ts
+    - category/
+        - index.ts
+        - category.ts
+        - categoryModel.ts
+    - list/
+        - index.ts
+        - list.ts
+        - listItemsModel.ts
+        - listModel.ts
+        - listQueryModel.ts
+        - publicListsModel.ts
+    - order/
+        - index.ts
+        - order.ts
+        - orderModel.ts
+        - orderQueryModel.ts
+    - product/
+        - index.ts
+        - product.ts
+        - productModel.ts
+        - productQueryModel.ts
+    - promotion/
+        - index.ts
+        - promotion.ts
+        - promotionModel.ts
+    - recipe/
+        - index.ts
+        - recipe.ts
+        - recipeModel.ts
+        - recipeQueryModel.ts
+    - store/
+        - index.ts
+        - store.ts
+        - storeModel.ts
+        - storeQueryModel.ts
+    - user/
+        - index.ts
+        - user.ts
+        - userModel.ts
+    - jumbo.ts
+    - index.ts
+- test/
+    - auth.test.ts
+    - basket.test.ts
+    - category.test.ts
+    - index.test.ts
+    - list.test.ts
+    - order.test.ts
+    - product.test.ts
+    - promotion.test.ts
+    - recipe.test.ts
+    - store.test.ts
+    - user.test.ts
+- .env.example
+- .eslintrc.js
+- .gitattributes
+
+### plus
+- src/
+    - base/
+        - plusObject.ts
+    - product/
+        - index.ts
+        - product.ts
+        - productModel.ts
+    - promotion/
+        - index.ts
+        - promotion.ts
+        - promotionModel.ts
+    - recipe/
+        - index.ts
+        - recipe.ts
+        - recipeModel.ts
+    - store/
+        - index.ts
+        - store.ts
+        - storeModel.ts
+    - plus.ts
+    - index.ts
+- test/
+    - index.test.ts
+    - product.test.ts
+    - promotion.test.ts
+    - recipe.test.ts
+    - store.test.ts
+
+## Migrated Structure
+- .github/
+    - workflows/
+        - publish.yml
+        - test.yml
+- .gitignore
+- README.md
