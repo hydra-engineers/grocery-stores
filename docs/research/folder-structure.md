@@ -3,7 +3,6 @@
 ## comparison queue
 
 ### Shared
-- jest.config.ts
 - package.json
 - rollup.config.js
 - tsconfig.json
