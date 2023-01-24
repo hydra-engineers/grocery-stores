@@ -2,8 +2,6 @@
 
 ## comparison queue
 
-### Shared
-
 ### albert-heijn
 - src/
     - auth/
@@ -42,7 +40,6 @@
     - product.test.ts
     - recipe.test.ts
     - store.test.ts
-- .eslintrc.js
 
 ### aldi
 - src/
@@ -150,8 +147,6 @@
     - recipe.test.ts
     - store.test.ts
     - user.test.ts
-- .env.example
-- .eslintrc.js
 
 ### plus
 - src/
@@ -187,6 +182,8 @@
     - workflows/
         - publish.yml
         - test.yml
+- .env.example
+- .eslintrc.js
 - .gitattributes
 - .gitignore
 - .npmignore
