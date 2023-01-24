@@ -4,8 +4,6 @@
 
 ### Shared
 - package.json
-- rollup.config.js
-- tsconfig.json
 
 ### albert-heijn
 - src/
