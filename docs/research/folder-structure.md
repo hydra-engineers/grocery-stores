@@ -3,7 +3,6 @@
 ## comparison queue
 
 ### Shared
-- .prettierrc
 - jest.config.ts
 - package.json
 - rollup.config.js
