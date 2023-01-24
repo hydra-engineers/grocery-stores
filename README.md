@@ -5,6 +5,13 @@ This repo contains all the api wrappers migrated into one.
 This section contains information about api wrappers for different stores.
 
 ### (dev)Dependencies
+> **Note**
+> execute the following command to update all dependencies for each wrapper
+>
+> ```
+> pnpm add axios date-fns && pnpm add --save-dev @rollup/plugin-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser @types/jest @types/node @types/node-fetch dotenv rollup prettier jest ts-jest ts-node tslib typescript && pnpm update *@latest
+> ```
+
 - dependencies
   - axios
   - date-fns
@@ -23,12 +30,6 @@ This section contains information about api wrappers for different stores.
   - ts-node
   - tslib
   - typescript
-
-> **note**
->
-> execute the following command to update all dependencies for each wrapper
->
-> `pnpm add axios date-fns && pnpm add --save-dev @rollup/plugin-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser @types/jest @types/node @types/node-fetch dotenv rollup prettier jest ts-jest ts-node tslib typescript && pnpm update *@latest`
 
 ### Scripts
 - "build": "rollup --config rollup.config.ts --configPlugin typescript", (all)
