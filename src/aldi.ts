@@ -2,9 +2,9 @@
 import axios, { AxiosInstance } from 'axios';
 
 // @local/modules
-import { Product } from './product/product';
-import { Recipe } from './recipe/recipe';
-import { Promotion } from './promotion/promotion';
+// import { Product } from './product/product';
+// import { Recipe } from './recipe/recipe';
+// import { Promotion } from './promotion/promotion';
 
 export interface AldiClientOptions {
     verbose?: boolean;
@@ -16,31 +16,23 @@ export class Aldi {
     private readonly client: AxiosInstance;
     private verbose: boolean;
 
-    private readonly aldiProduct: Product;
-    private readonly aldiPromotion: Promotion;
-    private readonly aldiRecipe: Recipe;
+    // private readonly aldiProduct: Product;
+    // private readonly aldiPromotion: Promotion;
+    // private readonly aldiRecipe: Recipe;
 
     constructor(options?: AldiClientOptions) {
         this.verbose = options?.verbose ?? false;
         this.client = axios.create();
         this.endpoint = options?.apiVersion ? this.endpoint + `v${options.apiVersion}/` : this.endpoint + 'v1/';
 
-        this.aldiProduct = new Product(this);
-        this.aldiPromotion = new Promotion(this);
-        this.aldiRecipe = new Recipe(this);
+        // this.aldiProduct = new Product(this);
+        // this.aldiPromotion = new Promotion(this);
+        // this.aldiRecipe = new Recipe(this);
     }
 
-    product() {
-        return this.aldiProduct;
-    }
-
-    promotion() {
-        return this.aldiPromotion;
-    }
-
-    recipe() {
-        return this.aldiRecipe;
-    }
+    // product() { return this.aldiProduct; }
+    // promotion() { return this.aldiPromotion; }
+    // recipe() { return this.aldiRecipe; }
 
     async get(path: string, additionalRequestOptions?: AdditionalRequestOptions) {
         return this.request(path, requestMethod.GET, undefined, additionalRequestOptions);

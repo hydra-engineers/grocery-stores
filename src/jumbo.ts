@@ -5,16 +5,16 @@ import https from 'node:https';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 // @local/modules
-import { Product } from './product/product';
-import { Store } from './store/store';
-import { TokenHandler } from './auth/tokenHandler';
-import { Order } from './order/order';
-import { Promotion } from './promotion/promotion';
-import { Recipe } from './recipe/recipe';
-import { User } from './user/user';
-import { Category } from './category/category';
-import { List } from './list/list';
-import { Basket } from './basket/basket';
+// import { Product } from './product/product';
+// import { Store } from './store/store';
+// import { TokenHandler } from './auth/tokenHandler';
+// import { Order } from './order/order';
+// import { Promotion } from './promotion/promotion';
+// import { Recipe } from './recipe/recipe';
+// import { User } from './user/user';
+// import { Category } from './category/category';
+// import { List } from './list/list';
+// import { Basket } from './basket/basket';
 
 export interface JumboClientOptions {
     username?: string;
@@ -30,16 +30,16 @@ export class Jumbo {
     private readonly client: AxiosInstance;
     private verbose: boolean;
 
-    jumboBasket: Basket;
-    jumboCategory: Category;
-    jumboList: List;
-    jumboOrder: Order;
-    jumboProduct: Product;
-    jumboPromotion: Promotion;
-    jumboRecipe: Recipe;
-    jumboStore: Store;
-    jumboUser: User;
-    tokenHandler?: TokenHandler;
+    // jumboBasket: Basket;
+    // jumboCategory: Category;
+    // jumboList: List;
+    // jumboOrder: Order;
+    // jumboProduct: Product;
+    // jumboPromotion: Promotion;
+    // jumboRecipe: Recipe;
+    // jumboStore: Store;
+    // jumboUser: User;
+    // tokenHandler?: TokenHandler;
 
     /**
      * @param options Options for the client
@@ -61,78 +61,52 @@ export class Jumbo {
               });
         this.endpoint = options?.apiVersion ? this.endpoint + `v${options.apiVersion}/` : this.endpoint + 'v17/';
         // Set separate classes
-        this.jumboBasket = new Basket(this, false);
-        this.jumboCategory = new Category(this, false);
-        this.jumboList = new List(this, false);
-        this.jumboOrder = new Order(this, true);
-        this.jumboProduct = new Product(this, false);
-        this.jumboPromotion = new Promotion(this, false);
-        this.jumboRecipe = new Recipe(this, false);
-        this.jumboStore = new Store(this, false);
-        this.jumboUser = new User(this, true);
+        // this.jumboBasket = new Basket(this, false);
+        // this.jumboCategory = new Category(this, false);
+        // this.jumboList = new List(this, false);
+        // this.jumboOrder = new Order(this, true);
+        // this.jumboProduct = new Product(this, false);
+        // this.jumboPromotion = new Promotion(this, false);
+        // this.jumboRecipe = new Recipe(this, false);
+        // this.jumboStore = new Store(this, false);
+        // this.jumboUser = new User(this, true);
         // Login using given username and password
-        if (options?.username && options?.password) {
-            this.login(options.username, options.password);
-        }
+        // if (options?.username && options?.password) {
+        //     this.login(options.username, options.password);
+        // }
         // Login using given token
-        if (options?.token) {
-            this.loginWithToken(options.token);
-        }
+        // if (options?.token) {
+        //     this.loginWithToken(options.token);
+        // }
         this.verbose = options?.verbose || false;
     }
 
-    basket() {
-        return this.jumboBasket;
-    }
-
-    category() {
-        return this.jumboCategory;
-    }
-
-    list() {
-        return this.jumboList;
-    }
-
-    order() {
-        return this.jumboOrder;
-    }
-
-    product() {
-        return this.jumboProduct;
-    }
-
-    promotion() {
-        return this.jumboPromotion;
-    }
-
-    recipe() {
-        return this.jumboRecipe;
-    }
-
-    store() {
-        return this.jumboStore;
-    }
-
-    user() {
-        return this.jumboUser;
-    }
+    // basket() { return this.jumboBasket; }
+    // category() { return this.jumboCategory; }
+    // list() { return this.jumboList; }
+    // order() { return this.jumboOrder; }
+    // product() { return this.jumboProduct; }
+    // promotion() { return this.jumboPromotion; }
+    // recipe() { return this.jumboRecipe; }
+    // store() { return this.jumboStore; }
+    // user() { return this.jumboUser; }
 
     /**
      * Function that creates a new TokenHandler for given username and password
      * @param username Jumbo account username (e-mail)
      * @param password Jumbo account password
      */
-    login(username: string, password: string) {
-        this.tokenHandler = new TokenHandler(this, username, password);
-    }
+    // login(username: string, password: string) {
+    //     this.tokenHandler = new TokenHandler(this, username, password);
+    // }
 
     /**
      * Function that creates a new TokenHandler for given access token
      * @param token Jumbo access token
      */
-    loginWithToken(token: string) {
-        this.tokenHandler = new TokenHandler(this, '', '', token);
-    }
+    // loginWithToken(token: string) {
+    //     this.tokenHandler = new TokenHandler(this, '', '', token);
+    // }
 
     /**
      * PUT request
@@ -204,14 +178,14 @@ export class Jumbo {
         fullResponse?: boolean
     ) {
         // If auth is required and we don't have a token yet, we should create one
-        if (authRequired) {
-            if (!this.tokenHandler) {
-                throw new Error(`You must be logged in to access this path: ${this.endpoint + path}`);
-            } else {
-                // If the tokenHandler doesn't have a token yet, make sure it gets one
-                await this.tokenHandler.Ready;
-            }
-        }
+        // if (authRequired) {
+        //     if (!this.tokenHandler) {
+        //         throw new Error(`You must be logged in to access this path: ${this.endpoint + path}`);
+        //     } else {
+        //         // If the tokenHandler doesn't have a token yet, make sure it gets one
+        //         await this.tokenHandler.Ready;
+        //     }
+        // }
 
         // Create initial header properties
         let requestHeaders: Headers = this.createHeader(authRequired, additionalRequestOptions?.headers);
@@ -260,11 +234,11 @@ export class Jumbo {
             'User-Agent': 'jumbo-wrapper',
             ...extraHeaders
         };
-        if (authRequired && this.tokenHandler) {
-            headers['x-jumbo-token'] = this.tokenHandler.getToken();
-        } else if (authRequired && !this.tokenHandler) {
-            throw new Error('You must be logged in to use this function');
-        }
+        // if (authRequired && this.tokenHandler) {
+        //     headers['x-jumbo-token'] = this.tokenHandler.getToken();
+        // } else if (authRequired && !this.tokenHandler) {
+        //     throw new Error('You must be logged in to use this function');
+        // }
 
         // Return the headers
         return headers;

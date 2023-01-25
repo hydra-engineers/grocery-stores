@@ -2,8 +2,8 @@
 import axios, { AxiosInstance } from 'axios';
 
 // @local/modules
-import { Product } from './product';
-import { Recipe } from './recipe';
+// import { Product } from './product';
+// import { Recipe } from './recipe';
 
 export interface CoopClientOptions {
     verbose?: boolean;
@@ -14,24 +14,19 @@ export class Coop {
     private readonly client: AxiosInstance;
     private verbose: boolean;
 
-    private readonly coopProduct: Product;
-    private readonly coopRecipe: Recipe;
+    // private readonly coopProduct: Product;
+    // private readonly coopRecipe: Recipe;
 
     constructor(options?: CoopClientOptions) {
         this.verbose = options?.verbose ?? false;
         this.client = axios.create();
 
-        this.coopProduct = new Product(this);
-        this.coopRecipe = new Recipe(this);
+        // this.coopProduct = new Product(this);
+        // this.coopRecipe = new Recipe(this);
     }
 
-    product() {
-        return this.coopProduct;
-    }
-
-    recipe() {
-        return this.coopRecipe;
-    }
+    // product() { return this.coopProduct; }
+    // recipe() { return this.coopRecipe; }
 
     async get(path: string, additionalRequestOptions?: AdditionalRequestOptions) {
         return this.request(path, requestMethod.GET, undefined, additionalRequestOptions);

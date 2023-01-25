@@ -2,10 +2,10 @@
 import axios, { AxiosInstance } from 'axios';
 
 // @local/modules
-import { Product } from './product/product';
-import { Promotion } from './promotion/promotion';
-import { Recipe } from './recipe/recipe';
-import { Store } from './store/store';
+// import { Product } from './product/product';
+// import { Promotion } from './promotion/promotion';
+// import { Recipe } from './recipe/recipe';
+// import { Store } from './store/store';
 
 export interface PlusClientOptions {
     verbose?: boolean;
@@ -17,37 +17,26 @@ export class Plus {
     private readonly client: AxiosInstance;
     private verbose: boolean;
 
-    private readonly plusProduct: Product;
-    private readonly plusPromotion: Promotion;
-    private readonly plusRecipe: Recipe;
-    private readonly plusStore: Store;
+    // private readonly plusProduct: Product;
+    // private readonly plusPromotion: Promotion;
+    // private readonly plusRecipe: Recipe;
+    // private readonly plusStore: Store;
 
     constructor(options?: PlusClientOptions) {
         this.verbose = options?.verbose ?? false;
         this.client = axios.create();
         this.endpoint = options?.apiVersion ? this.endpoint + `v${options.apiVersion}/` : this.endpoint + 'v3/';
 
-        this.plusProduct = new Product(this);
-        this.plusPromotion = new Promotion(this);
-        this.plusRecipe = new Recipe(this);
-        this.plusStore = new Store(this);
+        // this.plusProduct = new Product(this);
+        // this.plusPromotion = new Promotion(this);
+        // this.plusRecipe = new Recipe(this);
+        // this.plusStore = new Store(this);
     }
 
-    product() {
-        return this.plusProduct;
-    }
-
-    promotion() {
-        return this.plusPromotion;
-    }
-
-    recipe() {
-        return this.plusRecipe;
-    }
-
-    store() {
-        return this.plusStore;
-    }
+    // product() { return this.plusProduct; }
+    // promotion() { return this.plusPromotion; }
+    // recipe() { return this.plusRecipe; }
+    // store() { return this.plusStore; }
 
     async get(path: string, additionalRequestOptions?: AdditionalRequestOptions) {
         return this.request(path, requestMethod.GET, undefined, additionalRequestOptions);

@@ -2,12 +2,12 @@
 import axios, { AxiosInstance } from 'axios';
 
 // @local/modules
-import { TokenHandler } from './auth/tokenHandler';
-import { Bonus } from './bonus/bonus';
-import { Category } from './category/category';
-import { Product } from './product/product';
-import { Recipe } from './recipe/recipe';
-import { Store } from './store/store';
+// import { TokenHandler } from './auth/tokenHandler';
+// import { Bonus } from './bonus/bonus';
+// import { Category } from './category/category';
+// import { Product } from './product/product';
+// import { Recipe } from './recipe/recipe';
+// import { Store } from './store/store';
 
 const endpoint = 'https://api.ah.nl/';
 
@@ -16,48 +16,39 @@ export interface AHClientOptions {
 }
 
 export class AH {
+
     private readonly client: AxiosInstance;
-    public readonly tokenHandler: TokenHandler;
+    // public readonly tokenHandler: TokenHandler;
 
     private verbose: boolean;
 
-    private readonly AHBonus: Bonus;
-    private readonly AHCategory: Category;
-    private readonly AHProduct: Product;
-    private readonly AHRecipe: Recipe;
-    private readonly AHStore: Store;
+    // private readonly AHBonus: Bonus;
+    // private readonly AHCategory: Category;
+    // private readonly AHProduct: Product;
+    // private readonly AHRecipe: Recipe;
+    // private readonly AHStore: Store;
 
     constructor(options?: AHClientOptions) {
+
         this.verbose = options?.verbose ?? false;
+
         this.client = axios.create();
-        this.tokenHandler = new TokenHandler(this);
 
-        this.AHBonus = new Bonus(this);
-        this.AHCategory = new Category(this);
-        this.AHProduct = new Product(this);
-        this.AHRecipe = new Recipe(this);
-        this.AHStore = new Store(this);
+        // this.tokenHandler = new TokenHandler(this);
+
+        // this.AHBonus = new Bonus(this);
+        // this.AHCategory = new Category(this);
+        // this.AHProduct = new Product(this);
+        // this.AHRecipe = new Recipe(this);
+        // this.AHStore = new Store(this);
+
     }
 
-    bonus() {
-        return this.AHBonus;
-    }
-
-    category() {
-        return this.AHCategory;
-    }
-
-    product() {
-        return this.AHProduct;
-    }
-
-    recipe() {
-        return this.AHRecipe;
-    }
-
-    store() {
-        return this.AHStore;
-    }
+    // bonus() { return this.AHBonus; }
+    // category() { return this.AHCategory; }
+    // product() { return this.AHProduct; }
+    // recipe() { return this.AHRecipe; }
+    // store() { return this.AHStore; }
 
     async post(
         path: string,
@@ -79,10 +70,10 @@ export class AH {
         additionalRequestOptions?: AdditionalRequestOptions,
         noAuth?: boolean
     ) {
-        if (!noAuth) {
-            // Make sure tokenHandler is ready (has a token)
-            await this.tokenHandler.Ready;
-        }
+        // if (!noAuth) {
+        //     // Make sure tokenHandler is ready (has a token)
+        //     await this.tokenHandler.Ready;
+        // }
 
         // Since a token is needed for every request, just always add it
         const requestHeader: Headers = await this.createHeader(!noAuth, additionalRequestOptions?.headers);
@@ -126,10 +117,10 @@ export class AH {
             ...extraHeaders
         };
 
-        if (authRequired && this.tokenHandler) {
-            const token = await this.tokenHandler.getToken();
-            headers['Authorization'] = `Bearer ${token.access_token}`;
-        }
+        // if (authRequired && this.tokenHandler) {
+        //     const token = await this.tokenHandler.getToken();
+        //     headers['Authorization'] = `Bearer ${token.access_token}`;
+        // }
 
         // Return the headers
         return headers;
