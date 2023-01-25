@@ -1,12 +1,12 @@
 // @local/modules
-import GroceryStore, { GroceryStoreOptions } from '../core/classes/groceryStore';
+import { GroceryStore, GroceryStoreOptions } from '../core';
 /*
 import { TokenHandler } from './auth/tokenHandler';
-import { Bonus } from './bonus/bonus';
-import { Category } from './category/category';
 import { Product } from './product/product';
 import { Recipe } from './recipe/recipe';
+import { Bonus } from './bonus/bonus';
 import { Store } from './store/store';
+import { Category } from './category/category';
 */
 
 export class AH extends GroceryStore {
@@ -25,7 +25,6 @@ export class AH extends GroceryStore {
         super("ah", options);
 
         /*
-        this.tokenHandler = new TokenHandler(this);
         this.AHBonus = new Bonus(this);
         this.AHCategory = new Category(this);
         this.AHProduct = new Product(this);

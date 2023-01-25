@@ -1,14 +1,14 @@
 // @local/modules
-import GroceryStore, { GroceryStoreOptions } from '../core/classes/groceryStore';
+import { GroceryStore, GroceryStoreOptions } from '../core';
 /*
-import { Product } from './product/product';
-import { Store } from './store/store';
 import { TokenHandler } from './auth/tokenHandler';
-import { Order } from './order/order';
-import { Promotion } from './promotion/promotion';
+import { Product } from './product/product';
 import { Recipe } from './recipe/recipe';
-import { User } from './user/user';
+import { Promotion } from './promotion/promotion';
+import { Store } from './store/store';
 import { Category } from './category/category';
+import { Order } from './order/order';
+import { User } from './user/user';
 import { List } from './list/list';
 import { Basket } from './basket/basket';
 */

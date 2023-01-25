@@ -1,5 +1,5 @@
 // @local/modules
-import GroceryStore, { GroceryStoreOptions } from '../core/classes/groceryStore';
+import { GroceryStore, GroceryStoreOptions } from '../core';
 /*
 import { Product } from './product/product';
 import { Recipe } from './recipe/recipe';
