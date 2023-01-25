@@ -42,7 +42,7 @@ export class Coop extends Store {
 
         const url = this.createURL(path, additionalRequestOptions?.query);
 
-        if (this.verbose) {
+        if (this.options.verbose) {
             console.log(url);
             console.log(method);
             console.log(requestHeader);

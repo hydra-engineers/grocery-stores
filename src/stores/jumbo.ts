@@ -185,7 +185,7 @@ export class Jumbo extends Store {
         let url: string = this.createURL(path, additionalRequestOptions?.query);
 
         // Log if verbose
-        if (this.verbose) {
+        if (this.options.verbose) {
             console.log(url);
             console.log(method);
             console.log(requestHeaders);

@@ -5,36 +5,37 @@ import https from 'node:https';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 // @local/modules
-import Metadata, { ValidStoreNames } from './meta';
+import Settings, { ValidStoreNames } from './utils/settings';
 
 export default class Store {
 
-    metadata: Metadata;
-    readonly verbose: boolean;
+    private readonly settings: Settings;
     readonly endpoint: string;
     readonly client: AxiosInstance;
-    options: StoreOptions;
+    readonly options: StoreOptions;
 
     constructor(storeName: ValidStoreNames, options?: StoreOptions) {
 
-        this.metadata = new Metadata(storeName);
+        this.settings = new Settings(storeName);
 
+        // validate the options object
         this.options             = options              || {};
-        this.options.token       = options?.token       || this.metadata.default.token;
-        this.options.verbose     = options?.verbose     || this.metadata.default.verbose;
-        this.options.username    = options?.username    || this.metadata.default.username;
-        this.options.password    = options?.password    || this.metadata.default.password;
-        this.options.setVersion  = options?.setVersion  || this.metadata.default.set_version;
-        this.options.apiVersion  = options?.apiVersion  || this.metadata.default.api_version;
+        this.options.token       = options?.token       || this.settings.default.token;
+        this.options.verbose     = options?.verbose     || this.settings.default.verbose;
+        this.options.username    = options?.username    || this.settings.default.username;
+        this.options.password    = options?.password    || this.settings.default.password;
+        this.options.setVersion  = options?.setVersion  || this.settings.default.set_version;
+        this.options.apiVersion  = options?.apiVersion  || this.settings.default.api_version;
 
-        this.verbose = this.options.verbose ?? false;
+        // validate the options without a default value in the Settings object
+        this.options.axiosConfig = options?.axiosConfig || undefined;
 
-        this.endpoint = this.metadata.endpoint;
+        this.endpoint = this.settings.endpoint;
         if (this.options.setVersion) this.endpoint += `v${this.options.apiVersion}/`;
 
         this.client = axios.create(
             this.options.axiosConfig || (
-                this.metadata.name == "Jumbo" ? {
+                this.settings.name == "Jumbo" ? {
                     httpsAgent: new https.Agent({ maxVersion: 'TLSv1.2' })
                 } : undefined
             )
