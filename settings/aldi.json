@@ -1,4 +1,5 @@
 {
+    "id": "aldi",
     "name": "Aldi",
     "endpoint": "https://webservice.aldi.nl/api/",
     "set_version": true,

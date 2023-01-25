@@ -1,5 +1,5 @@
 // @local/modules
-import Store, { requestMethod, StoreOptions, Query, Headers, AdditionalRequestOptions } from '../core/store';
+import GroceryStore, { GroceryStoreOptions } from '../core/classes/groceryStore';
 /*
 import { Product } from './product/product';
 import { Store } from './store/store';
@@ -13,7 +13,7 @@ import { List } from './list/list';
 import { Basket } from './basket/basket';
 */
 
-export class Jumbo extends Store {
+export class Jumbo extends GroceryStore {
 
     /*
     jumboBasket: Basket;
@@ -37,7 +37,7 @@ export class Jumbo extends Store {
      * @param options.axiosConfig Axios configuration (defaults to TLSv1.2)
      * @param options.apiVersion Jumbo API version (defaults to 17)
      */
-    constructor(options?: StoreOptions) {
+    constructor(options?: GroceryStoreOptions) {
 
         super("jumbo", options);
 
@@ -99,158 +99,4 @@ export class Jumbo extends Store {
     }
     */
 
-    /**
-     * PUT request
-     * @param path Endpoint URL (without start)
-     * @param body Body of PUT (if any)
-     * @param additionalRequestOptions Any additional headers or queries
-     * @param authRequired Whether a token is required for the function
-     * @param fullResponse Returns response + headers instead of only data
-     */
-    async put(
-        path: string,
-        body?: any,
-        additionalRequestOptions?: AdditionalRequestOptions,
-        authRequired?: boolean,
-        fullResponse?: boolean
-    ) {
-        return this.request(path, requestMethod.PUT, body, additionalRequestOptions, authRequired, fullResponse);
-    }
-
-    /**
-     * POST request
-     * @param path Endpoint URL (without start)
-     * @param body Body of POST
-     * @param additionalRequestOptions Any additional headers or queries
-     * @param authRequired Whether a token is required for the function
-     * @param fullResponse Returns response + headers instead of only data
-     */
-    async post(
-        path: string,
-        body: any,
-        additionalRequestOptions?: AdditionalRequestOptions,
-        authRequired?: boolean,
-        fullResponse?: boolean
-    ) {
-        return this.request(path, requestMethod.POST, body, additionalRequestOptions, authRequired, fullResponse);
-    }
-
-    /**
-     * GET request
-     * @param path Endpoint URL (without start)
-     * @param additionalRequestOptions Any additional headers or queries
-     * @param authRequired Whether a token is required for the function
-     * @param fullResponse Returns response + headers instead of only data
-     */
-    async get(
-        path: string,
-        additionalRequestOptions?: AdditionalRequestOptions,
-        authRequired?: boolean,
-        fullResponse?: boolean
-    ) {
-        return this.request(path, requestMethod.GET, undefined, additionalRequestOptions, authRequired, fullResponse);
-    }
-
-    /**
-     * Generic request method
-     * @param path Endpoint URL (without start)
-     * @param method Request method (GET, POST, PUT, DELETE)
-     * @param body Body in case of POST and PUT
-     * @param additionalRequestOptions Any additional headers or queries
-     * @param authRequired Whether a token is required for the function
-     * @param fullResponse Returns response + headers instead of only data
-     */
-    async request(
-        path: string,
-        method: requestMethod,
-        body?: any,
-        additionalRequestOptions?: AdditionalRequestOptions,
-        authRequired?: boolean,
-        fullResponse?: boolean
-    ) {
-        // If auth is required and we don't have a token yet, we should create one
-        // if (authRequired) {
-        //     if (!this.tokenHandler) {
-        //         throw new Error(`You must be logged in to access this path: ${this.endpoint + path}`);
-        //     } else {
-        //         // If the tokenHandler doesn't have a token yet, make sure it gets one
-        //         await this.tokenHandler.Ready;
-        //     }
-        // }
-
-        // Create initial header properties
-        let requestHeaders: Headers = this.createHeader(authRequired, additionalRequestOptions?.headers);
-
-        // Add query to URL if given
-        let url: string = this.createURL(path, additionalRequestOptions?.query);
-
-        // Log if verbose
-        if (this.options.verbose) {
-            console.log(url);
-            console.log(method);
-            console.log(requestHeaders);
-            void (body && console.log(body));
-        }
-
-        // Make request
-        let response = await this.client.request({
-            method: method,
-            url: url,
-            headers: requestHeaders,
-            data: body
-        });
-
-        // Throw error if response not ok
-        if (!response.statusText) {
-            const text = response.data;
-
-            throw new Error(`${response.statusText}: ${text}`);
-        }
-
-        if (fullResponse) {
-            return response;
-        }
-        // Return response in JSON format
-        return response.data;
-    }
-
-    /**
-     * Helper function to create headers for request
-     * @param extraHeaders Any extra header options
-     */
-    createHeader(authRequired?: boolean, extraHeaders?: Headers): Headers {
-        // Create header
-        let headers: Headers = {
-            'Content-Type': 'application/json',
-            'User-Agent': 'jumbo-wrapper',
-            ...extraHeaders
-        };
-        // if (authRequired && this.tokenHandler) {
-        //     headers['x-jumbo-token'] = this.tokenHandler.getToken();
-        // } else if (authRequired && !this.tokenHandler) {
-        //     throw new Error('You must be logged in to use this function');
-        // }
-
-        // Return the headers
-        return headers;
-    }
-
-    /**
-     * Helper function to create request URL
-     * @param path Path to endpoint (without ENDPOINT in .env)
-     * @param query Any query options
-     */
-    createURL(path: string, query?: Query): string {
-        let url: string;
-        // Add query if given
-        if (query) {
-            const params = new URLSearchParams(query);
-            url = this.endpoint + path + '?' + params;
-        } else {
-            url = this.endpoint + path;
-        }
-
-        // Return URL
-        return url;
-    }
 }

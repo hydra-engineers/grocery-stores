@@ -1,4 +1,5 @@
 {
+    "id": "plus",
     "name": "Plus",
     "endpoint": "https://pls-sprmrkt-mw.prd.vdc1.plus.nl/api/",
     "set_version": true,

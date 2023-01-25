@@ -1,4 +1,5 @@
 {
+    "id": "jumbo",
     "name": "Jumbo",
     "endpoint": "https://mobileapi.jumbo.com/",
     "set_version": true,

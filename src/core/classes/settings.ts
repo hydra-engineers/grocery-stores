@@ -1,14 +1,14 @@
 // @node/modules
 import fs from 'node:fs';
 
-// @pnpm/modules
-import { AxiosRequestConfig } from 'axios';
+// @local/types
+import { KeyValuePairs, GroceryStoreIds } from '../helpers/types';
 
-export type ValidStoreNames = 'ah' | 'aldi' | 'coop' | 'jumbo' | 'plus';
-
-export interface StoreSettings {
+export interface GroceryStoreSettings {
+    readonly id: GroceryStoreIds;
     readonly name: string;
     readonly endpoint: string;
+    readonly additional_headers: KeyValuePairs;
     readonly default: {
         readonly token?: string;
         readonly verbose?: boolean;
@@ -16,14 +16,15 @@ export interface StoreSettings {
         readonly password?: string;
         readonly set_version?: boolean;
         readonly api_version?: number;
-        readonly axios_config?: AxiosRequestConfig;
     };
 }
 
-export default class Settings implements StoreSettings {
+export default class Settings implements GroceryStoreSettings {
 
+    readonly id: GroceryStoreIds;
     readonly name: string;
     readonly endpoint: string;
+    readonly additional_headers: KeyValuePairs;
     readonly default: {
         token?: string;
         verbose?: boolean;
@@ -33,13 +34,23 @@ export default class Settings implements StoreSettings {
         api_version?: number;
     };
 
-    constructor(storeName: ValidStoreNames) {
+    constructor(storeId: GroceryStoreIds) {
 
-        const rawmeta: Buffer = fs.readFileSync(`./settings/${storeName}.json`);
-        const meta: StoreSettings = JSON.parse(rawmeta.toString());
+        const rawmeta: Buffer = fs.readFileSync(`./settings/${storeId}.json`);
+        const meta: GroceryStoreSettings = JSON.parse(rawmeta.toString());
 
-        this.name     = meta.name;
-        this.endpoint = meta.endpoint;
+        this.id                      = meta.id;
+        this.name                    = meta.name;
+        this.endpoint                = meta.endpoint;
+
+        // validate the additional headers
+        this.additional_headers      = meta.additional_headers ? (() => {
+            const headers: KeyValuePairs = {};
+            const keys: string[] = Object.keys(meta.additional_headers);
+            for (const key in keys)
+                headers[`${key}`] = meta.additional_headers[`key`];
+            return headers;
+        })() : {};
 
         // set default values if they are not provided within a meta file
         this.default              = {};

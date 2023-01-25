@@ -2,7 +2,7 @@
 import EventEmitter from "node:events";
 
 // @local/modules
-import Store from './store';
+import GroceryStore from './classes/groceryStore';
 
 interface EventEmitterOptions {
     /**
@@ -14,7 +14,7 @@ interface EventEmitterOptions {
 // core class
 export default class Core extends EventEmitter {
     constructor(
-        protected readonly store: Store,
+        protected readonly store: GroceryStore,
         protected readonly authRequired: boolean,
         protected readonly eventEmitterOptions: EventEmitterOptions
     ) {
