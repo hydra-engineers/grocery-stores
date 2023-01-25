@@ -1,0 +1,8 @@
+{
+    "name": "Albert Heijn",
+    "endpoint": "https://api.ah.nl/",
+    "set_version": false,
+    "default": {
+        "verbose": false
+    }
+}

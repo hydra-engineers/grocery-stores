@@ -1,4 +1,4 @@
-import { Aldi } from '../aldi';
+import { Aldi } from '../stores/aldi';
 
 export class AldiObject {
     constructor(protected readonly aldi: Aldi) {}

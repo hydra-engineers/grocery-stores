@@ -1,38 +1,36 @@
-// @pnpm/modules
-import axios, { AxiosInstance } from 'axios';
-
 // @local/modules
-// import { Product } from './product/product';
-// import { Recipe } from './recipe/recipe';
-// import { Promotion } from './promotion/promotion';
+import Store, { requestMethod, StoreOptions, Query, Headers, AdditionalRequestOptions } from '../core/store';
+/*
+import { Product } from './product/product';
+import { Recipe } from './recipe/recipe';
+import { Promotion } from './promotion/promotion';
+*/
 
-export interface AldiClientOptions {
-    verbose?: boolean;
-    apiVersion?: number;
-}
+export class Aldi extends Store {
 
-export class Aldi {
-    private endpoint = 'https://webservice.aldi.nl/api/';
-    private readonly client: AxiosInstance;
-    private verbose: boolean;
+    /*
+    private readonly aldiProduct: Product;
+    private readonly aldiPromotion: Promotion;
+    private readonly aldiRecipe: Recipe;
+    */
 
-    // private readonly aldiProduct: Product;
-    // private readonly aldiPromotion: Promotion;
-    // private readonly aldiRecipe: Recipe;
+    constructor(options?: StoreOptions) {
 
-    constructor(options?: AldiClientOptions) {
-        this.verbose = options?.verbose ?? false;
-        this.client = axios.create();
-        this.endpoint = options?.apiVersion ? this.endpoint + `v${options.apiVersion}/` : this.endpoint + 'v1/';
+        super("aldi", options);
 
-        // this.aldiProduct = new Product(this);
-        // this.aldiPromotion = new Promotion(this);
-        // this.aldiRecipe = new Recipe(this);
+        /*
+        this.aldiProduct = new Product(this);
+        this.aldiPromotion = new Promotion(this);
+        this.aldiRecipe = new Recipe(this);
+        */
+
     }
 
-    // product() { return this.aldiProduct; }
-    // promotion() { return this.aldiPromotion; }
-    // recipe() { return this.aldiRecipe; }
+    /*
+    product() { return this.aldiProduct; }
+    promotion() { return this.aldiPromotion; }
+    recipe() { return this.aldiRecipe; }
+    */
 
     async get(path: string, additionalRequestOptions?: AdditionalRequestOptions) {
         return this.request(path, requestMethod.GET, undefined, additionalRequestOptions);
@@ -92,32 +90,4 @@ export class Aldi {
 
         return url;
     }
-}
-
-/**
- * Simple enum for different request methods
- */
-export enum requestMethod {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT'
-}
-
-/**
- * Query interface that is converted to {@URLSearchParams}
- */
-export interface Query {
-    [key: string]: string;
-}
-
-export interface Headers {
-    [key: string]: string;
-}
-
-/**
- * Interface that combines additional headers and query options
- */
-export interface AdditionalRequestOptions {
-    headers?: Headers;
-    query?: Query;
 }

@@ -1,4 +1,4 @@
-import { Plus } from '../plus';
+import { Plus } from '../stores/plus';
 
 export class PlusObject {
     constructor(protected readonly plus: Plus) {}

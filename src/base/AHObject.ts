@@ -1,4 +1,4 @@
-import { AH } from '../core/ah';
+import { AH } from '../stores/ah';
 
 export class AHObject {
     constructor(protected readonly ah: AH) {}

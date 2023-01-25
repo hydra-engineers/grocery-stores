@@ -1,0 +1,9 @@
+{
+    "name": "Aldi",
+    "endpoint": "https://webservice.aldi.nl/api/",
+    "set_version": true,
+    "default": {
+        "api_version": 1,
+        "verbose": false
+    }
+}

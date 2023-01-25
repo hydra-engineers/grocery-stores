@@ -1,4 +1,4 @@
-import { Coop } from '../coop';
+import { Coop } from '../stores/coop';
 
 export class CoopObject {
     constructor(protected readonly coop: Coop) {}

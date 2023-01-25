@@ -1,45 +1,32 @@
-// @node/modules
-import https from 'node:https';
-
-// @pnpm/modules
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-
 // @local/modules
-// import { Product } from './product/product';
-// import { Store } from './store/store';
-// import { TokenHandler } from './auth/tokenHandler';
-// import { Order } from './order/order';
-// import { Promotion } from './promotion/promotion';
-// import { Recipe } from './recipe/recipe';
-// import { User } from './user/user';
-// import { Category } from './category/category';
-// import { List } from './list/list';
-// import { Basket } from './basket/basket';
+import Store, { requestMethod, StoreOptions, Query, Headers, AdditionalRequestOptions } from '../core/store';
+/*
+import { Product } from './product/product';
+import { Store } from './store/store';
+import { TokenHandler } from './auth/tokenHandler';
+import { Order } from './order/order';
+import { Promotion } from './promotion/promotion';
+import { Recipe } from './recipe/recipe';
+import { User } from './user/user';
+import { Category } from './category/category';
+import { List } from './list/list';
+import { Basket } from './basket/basket';
+*/
 
-export interface JumboClientOptions {
-    username?: string;
-    password?: string;
-    token?: string;
-    verbose?: boolean;
-    axiosConfig?: AxiosRequestConfig;
-    apiVersion?: number;
-}
+export class Jumbo extends Store {
 
-export class Jumbo {
-    private endpoint = 'https://mobileapi.jumbo.com/';
-    private readonly client: AxiosInstance;
-    private verbose: boolean;
-
-    // jumboBasket: Basket;
-    // jumboCategory: Category;
-    // jumboList: List;
-    // jumboOrder: Order;
-    // jumboProduct: Product;
-    // jumboPromotion: Promotion;
-    // jumboRecipe: Recipe;
-    // jumboStore: Store;
-    // jumboUser: User;
-    // tokenHandler?: TokenHandler;
+    /*
+    jumboBasket: Basket;
+    jumboCategory: Category;
+    jumboList: List;
+    jumboOrder: Order;
+    jumboProduct: Product;
+    jumboPromotion: Promotion;
+    jumboRecipe: Recipe;
+    jumboStore: Store;
+    jumboUser: User;
+    tokenHandler?: TokenHandler;
+    */
 
     /**
      * @param options Options for the client
@@ -50,63 +37,67 @@ export class Jumbo {
      * @param options.axiosConfig Axios configuration (defaults to TLSv1.2)
      * @param options.apiVersion Jumbo API version (defaults to 17)
      */
-    constructor(options?: JumboClientOptions) {
-        // Create https agent for TLSv1.2 or less (API doesn't respond to TLSv1.3+)
-        this.client = options?.axiosConfig
-            ? axios.create(options.axiosConfig)
-            : axios.create({
-                  httpsAgent: new https.Agent({
-                      maxVersion: 'TLSv1.2'
-                  })
-              });
-        this.endpoint = options?.apiVersion ? this.endpoint + `v${options.apiVersion}/` : this.endpoint + 'v17/';
+    constructor(options?: StoreOptions) {
+
+        super("jumbo", options);
+
+        /*
         // Set separate classes
-        // this.jumboBasket = new Basket(this, false);
-        // this.jumboCategory = new Category(this, false);
-        // this.jumboList = new List(this, false);
-        // this.jumboOrder = new Order(this, true);
-        // this.jumboProduct = new Product(this, false);
-        // this.jumboPromotion = new Promotion(this, false);
-        // this.jumboRecipe = new Recipe(this, false);
-        // this.jumboStore = new Store(this, false);
-        // this.jumboUser = new User(this, true);
+        this.jumboBasket = new Basket(this, false);
+        this.jumboCategory = new Category(this, false);
+        this.jumboList = new List(this, false);
+        this.jumboOrder = new Order(this, true);
+        this.jumboProduct = new Product(this, false);
+        this.jumboPromotion = new Promotion(this, false);
+        this.jumboRecipe = new Recipe(this, false);
+        this.jumboStore = new Store(this, false);
+        this.jumboUser = new User(this, true);
+
         // Login using given username and password
-        // if (options?.username && options?.password) {
-        //     this.login(options.username, options.password);
-        // }
+        if (options?.username && options?.password) {
+            this.login(options.username, options.password);
+        }
+
         // Login using given token
-        // if (options?.token) {
-        //     this.loginWithToken(options.token);
-        // }
-        this.verbose = options?.verbose || false;
+        if (options?.token) {
+            this.loginWithToken(options.token);
+        }
+        */
+
     }
 
-    // basket() { return this.jumboBasket; }
-    // category() { return this.jumboCategory; }
-    // list() { return this.jumboList; }
-    // order() { return this.jumboOrder; }
-    // product() { return this.jumboProduct; }
-    // promotion() { return this.jumboPromotion; }
-    // recipe() { return this.jumboRecipe; }
-    // store() { return this.jumboStore; }
-    // user() { return this.jumboUser; }
+    /*
+    basket() { return this.jumboBasket; }
+    category() { return this.jumboCategory; }
+    list() { return this.jumboList; }
+    order() { return this.jumboOrder; }
+    product() { return this.jumboProduct; }
+    promotion() { return this.jumboPromotion; }
+    recipe() { return this.jumboRecipe; }
+    store() { return this.jumboStore; }
+    user() { return this.jumboUser; }
+    */
 
     /**
      * Function that creates a new TokenHandler for given username and password
      * @param username Jumbo account username (e-mail)
      * @param password Jumbo account password
      */
-    // login(username: string, password: string) {
-    //     this.tokenHandler = new TokenHandler(this, username, password);
-    // }
+    /*
+    login(username: string, password: string) {
+        this.tokenHandler = new TokenHandler(this, username, password);
+    }
+    */
 
     /**
      * Function that creates a new TokenHandler for given access token
      * @param token Jumbo access token
      */
-    // loginWithToken(token: string) {
-    //     this.tokenHandler = new TokenHandler(this, '', '', token);
-    // }
+    /*
+    loginWithToken(token: string) {
+        this.tokenHandler = new TokenHandler(this, '', '', token);
+    }
+    */
 
     /**
      * PUT request
@@ -262,32 +253,4 @@ export class Jumbo {
         // Return URL
         return url;
     }
-}
-
-/**
- * Simple enum for different request methods
- */
-export enum requestMethod {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT'
-}
-
-/**
- * Query interface that is converted to {@URLSearchParams}
- */
-export interface Query {
-    [key: string]: string;
-}
-
-export interface Headers {
-    [key: string]: string;
-}
-
-/**
- * Interface that combines additional headers and query options
- */
-export interface AdditionalRequestOptions {
-    headers?: Headers;
-    query?: Query;
 }

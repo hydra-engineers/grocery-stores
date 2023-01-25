@@ -1,0 +1,9 @@
+{
+    "name": "Jumbo",
+    "endpoint": "https://mobileapi.jumbo.com/",
+    "set_version": true,
+    "default": {
+        "api_version": 17,
+        "verbose": false
+    }
+}

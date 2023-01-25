@@ -1,54 +1,47 @@
-// @pnpm/modules
-import axios, { AxiosInstance } from 'axios';
-
 // @local/modules
-// import { TokenHandler } from './auth/tokenHandler';
-// import { Bonus } from './bonus/bonus';
-// import { Category } from './category/category';
-// import { Product } from './product/product';
-// import { Recipe } from './recipe/recipe';
-// import { Store } from './store/store';
+import Store, { requestMethod, StoreOptions, Query, Headers, AdditionalRequestOptions } from '../core/store';
+/*
+import { TokenHandler } from './auth/tokenHandler';
+import { Bonus } from './bonus/bonus';
+import { Category } from './category/category';
+import { Product } from './product/product';
+import { Recipe } from './recipe/recipe';
+import { Store } from './store/store';
+*/
 
-const endpoint = 'https://api.ah.nl/';
+export class AH extends Store {
 
-export interface AHClientOptions {
-    verbose?: boolean;
-}
+    /*
+    public readonly tokenHandler: TokenHandler;
+    private readonly AHBonus: Bonus;
+    private readonly AHCategory: Category;
+    private readonly AHProduct: Product;
+    private readonly AHRecipe: Recipe;
+    private readonly AHStore: Store;
+    */
 
-export class AH {
+    constructor(options?: StoreOptions) {
 
-    private readonly client: AxiosInstance;
-    // public readonly tokenHandler: TokenHandler;
+        super("ah", options);
 
-    private verbose: boolean;
-
-    // private readonly AHBonus: Bonus;
-    // private readonly AHCategory: Category;
-    // private readonly AHProduct: Product;
-    // private readonly AHRecipe: Recipe;
-    // private readonly AHStore: Store;
-
-    constructor(options?: AHClientOptions) {
-
-        this.verbose = options?.verbose ?? false;
-
-        this.client = axios.create();
-
-        // this.tokenHandler = new TokenHandler(this);
-
-        // this.AHBonus = new Bonus(this);
-        // this.AHCategory = new Category(this);
-        // this.AHProduct = new Product(this);
-        // this.AHRecipe = new Recipe(this);
-        // this.AHStore = new Store(this);
+        /*
+        this.tokenHandler = new TokenHandler(this);
+        this.AHBonus = new Bonus(this);
+        this.AHCategory = new Category(this);
+        this.AHProduct = new Product(this);
+        this.AHRecipe = new Recipe(this);
+        this.AHStore = new Store(this);
+        */
 
     }
 
-    // bonus() { return this.AHBonus; }
-    // category() { return this.AHCategory; }
-    // product() { return this.AHProduct; }
-    // recipe() { return this.AHRecipe; }
-    // store() { return this.AHStore; }
+    /*
+    bonus() { return this.AHBonus; }
+    category() { return this.AHCategory; }
+    product() { return this.AHProduct; }
+    recipe() { return this.AHRecipe; }
+    store() { return this.AHStore; }
+    */
 
     async post(
         path: string,
@@ -136,40 +129,12 @@ export class AH {
         // Add query if given
         if (query) {
             const params = new URLSearchParams(query);
-            url = endpoint + path + '?' + params;
+            url = this.endpoint + path + '?' + params;
         } else {
-            url = endpoint + path;
+            url = this.endpoint + path;
         }
 
         // Return URL
         return url;
     }
-}
-
-/**
- * Simple enum for different request methods
- */
-export enum requestMethod {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT'
-}
-
-/**
- * Query interface that is converted to {@URLSearchParams}
- */
-export interface Query {
-    [key: string]: string;
-}
-
-export interface Headers {
-    [key: string]: string;
-}
-
-/**
- * Interface that combines additional headers and query options
- */
-export interface AdditionalRequestOptions {
-    headers?: Headers;
-    query?: Query;
 }

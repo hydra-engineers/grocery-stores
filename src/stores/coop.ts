@@ -1,32 +1,32 @@
-// @pnpm/modules
-import axios, { AxiosInstance } from 'axios';
-
 // @local/modules
-// import { Product } from './product';
-// import { Recipe } from './recipe';
+import Store, { requestMethod, StoreOptions, Query, Headers, AdditionalRequestOptions } from '../core/store';
+/*
+import { Product } from './product';
+import { Recipe } from './recipe';
+*/
 
-export interface CoopClientOptions {
-    verbose?: boolean;
-}
+export class Coop extends Store {
 
-export class Coop {
-    private endpoint = 'https://api.coop.nl/INTERSHOP/rest/WFS/COOP-2800-Site/';
-    private readonly client: AxiosInstance;
-    private verbose: boolean;
+    /*
+    private readonly coopProduct: Product;
+    private readonly coopRecipe: Recipe;
+    */
 
-    // private readonly coopProduct: Product;
-    // private readonly coopRecipe: Recipe;
+    constructor(options?: StoreOptions) {
 
-    constructor(options?: CoopClientOptions) {
-        this.verbose = options?.verbose ?? false;
-        this.client = axios.create();
+        super("coop", options);
 
-        // this.coopProduct = new Product(this);
-        // this.coopRecipe = new Recipe(this);
+        /*
+        this.coopProduct = new Product(this);
+        this.coopRecipe = new Recipe(this);
+        */
+
     }
 
-    // product() { return this.coopProduct; }
-    // recipe() { return this.coopRecipe; }
+    /*
+    product() { return this.coopProduct; }
+    recipe() { return this.coopRecipe; }
+    */
 
     async get(path: string, additionalRequestOptions?: AdditionalRequestOptions) {
         return this.request(path, requestMethod.GET, undefined, additionalRequestOptions);
@@ -86,32 +86,4 @@ export class Coop {
 
         return url;
     }
-}
-
-/**
- * Simple enum for different request methods
- */
-export enum requestMethod {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT'
-}
-
-/**
- * Query interface that is converted to {@URLSearchParams}
- */
-export interface Query {
-    [key: string]: string;
-}
-
-export interface Headers {
-    [key: string]: string;
-}
-
-/**
- * Interface that combines additional headers and query options
- */
-export interface AdditionalRequestOptions {
-    headers?: Headers;
-    query?: Query;
 }
