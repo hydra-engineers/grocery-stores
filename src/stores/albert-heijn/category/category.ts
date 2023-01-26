@@ -1,16 +1,18 @@
-import {
-	GroceryStore,
-	RequestOptions
-} from '../../../core';
+import { GroceryStore, RequestOptions } from '../../../core';
 import { CategoryModel, SubCategoryModel } from './categoryModel';
 
 export class Category extends GroceryStore {
-    /**
+
+	/**
      * Returns all product categories
      */
-    async getProductCategories(additionalRequestOptions?: RequestOptions): Promise<CategoryModel[]> {
-        return await this.client.get('mobile-services/v1/product-shelves/categories', additionalRequestOptions);
-    }
+    async getProductCategories(
+		requestOptions?: RequestOptions
+	): Promise<CategoryModel[]> {
+
+		return await this.client.get('mobile-services/v1/product-shelves/categories', requestOptions);
+
+	}
 
     /**
      * Returns all product subcategories belonging to a category
@@ -18,11 +20,14 @@ export class Category extends GroceryStore {
      */
     async getProductSubCategories(
         categoryId: number,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<SubCategoryModel[]> {
-        return await this.client.get(
+
+		return await this.client.get(
             `mobile-services/v1/product-shelves/categories/${categoryId}/sub-categories`,
-            additionalRequestOptions
+            requestOptions
         );
-    }
+
+	}
+
 }

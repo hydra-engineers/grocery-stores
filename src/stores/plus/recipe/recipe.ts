@@ -1,8 +1,4 @@
-import {
-	GroceryStore,
-	RequestOptions
-} from '../../../core';
-
+import { GroceryStore, RequestOptions } from '../../../core';
 import { RecipeModel, RecipeQueryModel } from './recipeModel';
 
 export interface RecipeOptions {
@@ -12,16 +8,19 @@ export interface RecipeOptions {
 }
 
 export class Recipe extends GroceryStore {
-    /**
+
+	/**
      * Get recipe from given recipe ID
      * @param recipeId UUID of the recipe
      */
     async getRecipeFromId(
 		recipeId: string,
-		additionalRequestOptions?: RequestOptions
+		requestOptions?: RequestOptions
 	): Promise<RecipeModel> {
-        return await this.client.get(`proxy/recipes/${recipeId}`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`proxy/recipes/${recipeId}`, requestOptions);
+
+	}
 
     /**
      * Get recipes for given query
@@ -34,18 +33,21 @@ export class Recipe extends GroceryStore {
     async getRecipesFromName(
         recipeName: string,
         options?: RecipeOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<RecipeQueryModel> {
-        return await this.client.get(`proxy/recipes/search`, {
+
+		return await this.client.get(`proxy/recipes/search`, {
             query: {
                 q: recipeName,
                 sort: (options?.sort ?? 'dateStart_desc').toString(),
                 type: (options?.type?.join('|') ?? '').toString(),
                 cookingTime: (options?.cookingTime?.join('|') ?? '').toString()
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
+
 }
 
 export enum RecipeType {

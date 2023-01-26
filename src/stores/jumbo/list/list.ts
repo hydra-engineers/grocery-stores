@@ -1,9 +1,4 @@
-import {
-	GroceryStore,
-	PaginationOptions,
-	RequestOptions,
-	KeyValuePairs
-} from '../../../core';
+import { GroceryStore, PaginationOptions, RequestOptions } from '../../../core';
 import { ListItemsModel } from './listItemsModel';
 import { ListModel, ListQueryModel } from './listModel';
 import { Following, PublicListsModel } from './publicListsModel';
@@ -11,20 +6,30 @@ import { Following, PublicListsModel } from './publicListsModel';
 export interface ListOptions extends PaginationOptions {}
 
 export class List extends GroceryStore {
+
     /**
      * Returns all of your lists (login required)
      */
-    async getMyLists(additionalRequestOptions?: RequestOptions): Promise<ListQueryModel> {
-        return await this.client.get(`lists/mylists`, additionalRequestOptions, true);
-    }
+    async getMyLists(
+		requestOptions?: RequestOptions
+	): Promise<ListQueryModel> {
+
+		return await this.client.get(`lists/mylists`, requestOptions, true);
+
+	}
 
     /**
      * Returns a single list given a list ID
      * @param listId ID of list
      */
-    async getListFromId(listId: string, additionalRequestOptions?: RequestOptions): Promise<ListModel> {
-        return await this.client.get(`lists/${listId}`, additionalRequestOptions, false);
-    }
+    async getListFromId(
+		listId: string,
+		requestOptions?: RequestOptions
+	): Promise<ListModel> {
+
+		return await this.client.get(`lists/${listId}`, requestOptions, false);
+
+	}
 
     /**
      * Returns a list of lists that match the given name (name is case sensitive and very specific)
@@ -36,9 +41,10 @@ export class List extends GroceryStore {
     async getListsByName(
         listName: string,
         options?: ListOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<ListQueryModel> {
-        return await this.client.get(
+
+		return await this.client.get(
             `lists/search`,
             {
                 query: {
@@ -46,19 +52,25 @@ export class List extends GroceryStore {
                     limit: (options?.limit || 10).toString(),
                     q: listName
                 },
-                ...additionalRequestOptions
+                ...requestOptions
             },
             false
         );
-    }
+
+	}
 
     /**
      * Shortcut function to get the most popular lists
      * @param options Options for search
      */
-    async getPopularLists(options?: ListOptions, additionalRequestOptions?: RequestOptions) {
-        return await this.getListsByName('', options, additionalRequestOptions);
-    }
+    async getPopularLists(
+		options?: ListOptions,
+		requestOptions?: RequestOptions
+	) {
+
+		return await this.getListsByName('', options, requestOptions);
+
+	}
 
     /**
      * Gets all items from a given list
@@ -70,61 +82,88 @@ export class List extends GroceryStore {
     async getItemsFromList(
         listId: string,
         options?: ListOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<ListItemsModel> {
-        return await this.client.get(
+
+		return await this.client.get(
             `lists/${listId}/items`,
             {
                 query: {
                     offset: (options?.offset || 0).toString(),
                     limit: (options?.limit || 10).toString()
                 },
-                ...additionalRequestOptions
+                ...requestOptions
             },
             false
         );
-    }
+
+	}
 
     /**
      * Gets all smart lists (i.e. last purchased) of user (login required)
      */
-    async getMySmartLists(additionalRequestOptions?: RequestOptions): Promise<PublicListsModel> {
-        return await this.client.get(`users/me/smart-lists`, additionalRequestOptions, true);
-    }
+    async getMySmartLists(
+		requestOptions?: RequestOptions
+	): Promise<PublicListsModel> {
+
+		return await this.client.get(`users/me/smart-lists`, requestOptions, true);
+
+	}
 
     /**
      * Gets all the lists the user currently follows (login required)
      */
-    async getMyFollowedLists(additionalRequestOptions?: RequestOptions): Promise<PublicListsModel> {
-        return await this.client.get(`lists/following`, additionalRequestOptions, true);
-    }
+    async getMyFollowedLists(
+		requestOptions?: RequestOptions
+	): Promise<PublicListsModel> {
+
+		return await this.client.get(`lists/following`, requestOptions, true);
+
+	}
 
     /**
      * Checks whether the user is following the given list (login required)
      * @param listId ID of list
      */
-    async isFollowingList(listId: string, additionalRequestOptions?: RequestOptions): Promise<boolean> {
-        const isFollowing: Following = await this.client.get(
+    async isFollowingList(
+		listId: string,
+		requestOptions?: RequestOptions
+	): Promise<boolean> {
+
+		const isFollowing: Following = await this.client.get(
             `lists/${listId}/following`,
-            additionalRequestOptions,
+            requestOptions,
             true
         );
-        return isFollowing.isFollowing;
-    }
+
+		return isFollowing.isFollowing;
+
+	}
 
     /**
      * Makes the user follow the given list (login required)
      * @param listId ID of list to follow
      */
-    async followList(listId: string, additionalRequestOptions?: RequestOptions) {
-        return await this.client.put(`lists/${listId}/follow`, undefined, additionalRequestOptions, true);
-    }
+    async followList(
+		listId: string,
+		requestOptions?: RequestOptions
+	) {
+
+		return await this.client.put(`lists/${listId}/follow`, undefined, requestOptions, true);
+
+	}
 
     /**
      * Makes the user unfollow the given list (login required)
      * @param listId ID of list to unfollow
      */
-    async unfollowList(listId: string, additionalRequestOptions?: RequestOptions) {
-        return await this.client.put(`lists/${listId}/unfollow`, undefined, additionalRequestOptions, true);
-    }
+    async unfollowList(
+		listId: string,
+		requestOptions?: RequestOptions
+	) {
+
+		return await this.client.put(`lists/${listId}/unfollow`, undefined, requestOptions, true);
+
+	}
+
 }

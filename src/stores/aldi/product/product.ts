@@ -1,12 +1,9 @@
-import {
-	GroceryStore,
-	RequestOptions
-} from '../../../core';
-
+import { GroceryStore, RequestOptions } from '../../../core';
 import { ArticleModel, ProductQueryModel } from './productModel';
 
 export class Product extends GroceryStore {
-    /**
+
+	/**
      * Gets product from ID
      * @param productId Product ID, formatted as "products/{category}/{articleNumber}.json"
      */
@@ -14,8 +11,10 @@ export class Product extends GroceryStore {
         productId: string,
         additionalRequestOptions?: RequestOptions
     ): Promise<ArticleModel> {
-        return await this.client.get(`articles/${productId}.json`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`articles/${productId}.json`, additionalRequestOptions);
+
+	}
 
     /**
      * Get products from given product name
@@ -25,6 +24,9 @@ export class Product extends GroceryStore {
         productName: string,
         additionalRequestOptions?: RequestOptions
     ): Promise<ProductQueryModel> {
-        return await this.client.get(`articlesearch/${productName}.json`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`articlesearch/${productName}.json`, additionalRequestOptions);
+
+	}
+
 }

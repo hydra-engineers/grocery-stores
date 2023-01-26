@@ -1,7 +1,4 @@
-import {
-	GroceryStore,
-	RequestOptions
-} from '../../../core';
+import { GroceryStore, RequestOptions } from '../../../core';
 import { BasketModel, PutBasketItems, PutBasketResponse } from './basketModel';
 
 export class Basket extends GroceryStore {
@@ -9,9 +6,13 @@ export class Basket extends GroceryStore {
 	/**
      * Gets basket
      */
-    async getMyBasket(additionalRequestOptions?: RequestOptions): Promise<BasketModel> {
-        return await this.client.get(`basket`, additionalRequestOptions);
-    }
+    async getMyBasket(
+		requestOptions?: RequestOptions
+	): Promise<BasketModel> {
+
+		return await this.client.get(`basket`, requestOptions);
+
+	}
 
     /**
      * Updates basket with items, overwriting existing items
@@ -19,9 +20,11 @@ export class Basket extends GroceryStore {
      */
     async updateBasket(
         productJson: PutBasketItems,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<PutBasketResponse> {
-        return await this.client.put(`basket`, productJson, additionalRequestOptions);
-    }
+
+		return await this.client.put(`basket`, productJson, requestOptions);
+
+	}
 
 }

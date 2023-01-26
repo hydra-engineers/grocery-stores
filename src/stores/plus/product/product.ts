@@ -1,10 +1,4 @@
-import {
-	GroceryStore,
-	PaginationOptions,
-	RequestOptions,
-	KeyValuePairs
-} from '../../../core';
-
+import { GroceryStore, PaginationOptions, RequestOptions, KeyValuePairs } from '../../../core';
 import { ProductQueryModel, ProductModel } from './productModel';
 
 export interface ProductOptions extends PaginationOptions {
@@ -20,16 +14,19 @@ export interface ProductOptions extends PaginationOptions {
 }
 
 export class Product extends GroceryStore {
+
     /**
      * Gets product for given product ID
      * @param productId 6-digit product ID
      */
     async getProductFromId(
         productId: number,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<ProductModel> {
-        return await this.client.get(`product/${productId}`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`product/${productId}`, requestOptions);
+
+	}
 
     /**
      * Gets products for given product name
@@ -49,9 +46,10 @@ export class Product extends GroceryStore {
     async getProductsFromName(
         productName: string,
         options?: ProductOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<ProductQueryModel> {
-        const totalQuery: KeyValuePairs = {
+
+		const totalQuery: KeyValuePairs = {
             tn_q: productName,
             tn_cid: (options?.cId ?? '').toString(),
             tn_sort: (options?.sort ?? '').toString(),
@@ -59,26 +57,34 @@ export class Product extends GroceryStore {
             tn_parameters: (options?.parameters ?? '').toString(),
             tn_maxresults: (options?.limit ?? '20').toString()
         };
-        if (options?.storeId) {
+
+		if (options?.storeId) {
             totalQuery['tn_fk_storeid'] = options.storeId.toString();
         }
-        if (options?.nutriscore) {
+
+		if (options?.nutriscore) {
             totalQuery['tn_fk_ae-nutriscore'] = options.nutriscore.map((n) => n.toString()).join('|');
         }
-        if (options?.qualityLabel) {
+
+		if (options?.qualityLabel) {
             totalQuery['tn_fk_ae-keurmerken'] = options.qualityLabel.map((ql) => ql.toString()).join('|');
         }
-        if (options?.diet) {
+
+		if (options?.diet) {
             totalQuery['tn_fk_ae-dieet'] = options.diet.map((d) => d.toString()).join('|');
         }
-        if (options?.brands) {
+
+		if (options?.brands) {
             totalQuery['tn_fk_merk'] = options.brands.join('|');
         }
-        return await this.client.get('navigation-search', {
+
+		return await this.client.get('navigation-search', {
             query: totalQuery,
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
+
 }
 
 export enum ProductSortOptions {

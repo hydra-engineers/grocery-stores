@@ -1,9 +1,4 @@
-import {
-	GroceryStore,
-	PaginationOptions,
-	RequestOptions
-} from '../../../core';
-
+import { GroceryStore, PaginationOptions, RequestOptions } from '../../../core';
 import { RecipeModel } from './recipeModel';
 import { RecipeQueryModel } from './recipeQueryModel';
 
@@ -13,16 +8,19 @@ export interface RecipeOptions extends PaginationOptions {
 }
 
 export class Recipe extends GroceryStore {
-    /**
+
+	/**
      * Get recipe from ID
      * @param recipeId Recipe ID
      */
     async getRecipeFromId(
 		recipeId: number,
-		additionalRequestOptions?: RequestOptions
+		requestOptions?: RequestOptions
 	): Promise<RecipeModel> {
-        return await this.client.get(`mobile-services/recipes/v1/recipe/${recipeId}`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`mobile-services/recipes/v1/recipe/${recipeId}`, requestOptions);
+
+	}
 
     /**
      * Get recipes from given recipe name
@@ -36,9 +34,10 @@ export class Recipe extends GroceryStore {
     async getRecipeFromName(
         recipeName: string,
         options?: RecipeOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<RecipeQueryModel> {
-        return await this.client.get(`mobile-services/recipes/v2/search`, {
+
+		return await this.client.get(`mobile-services/recipes/v2/search`, {
             query: {
                 query: recipeName,
                 filters: options?.filter ? this.translateRecipeFilterToQuery(options.filter) : '',
@@ -46,44 +45,58 @@ export class Recipe extends GroceryStore {
                 page: (options?.page ?? 0).toString(),
                 size: (options?.size ?? 10).toString()
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
 
     /**
      * Translates the recipe filters to a usable filter query
      */
     private translateRecipeFilterToQuery(filter: RecipeFilter): string {
-        const out: string[] = [];
-        if (filter.oftenUsedFilter) {
+
+		const out: string[] = [];
+
+		if (filter.oftenUsedFilter) {
             out.push(`veel-gebruikt:${filter.oftenUsedFilter}`);
         }
-        if (filter.courseFilter) {
+
+		if (filter.courseFilter) {
             out.push(`menugang:${filter.courseFilter}`);
         }
-        if (filter.dishTypeFilter) {
+
+		if (filter.dishTypeFilter) {
             out.push(`soort-gerecht:${filter.dishTypeFilter}`);
         }
-        if (filter.contentFilter) {
+
+		if (filter.contentFilter) {
             out.push(`recepten-met:${filter.contentFilter}`);
         }
-        if (filter.wishesFilter) {
+
+		if (filter.wishesFilter) {
             out.push(`speciale-wensen:${filter.wishesFilter}`);
         }
-        if (filter.occasionFilter) {
+
+		if (filter.occasionFilter) {
             out.push(`momenten:${filter.occasionFilter}`);
         }
-        if (filter.seasonFilter) {
+
+		if (filter.seasonFilter) {
             out.push(`seizoen:${filter.seasonFilter}`);
         }
-        if (filter.techniqueFilter) {
+
+		if (filter.techniqueFilter) {
             out.push(`kooktechniek:${filter.techniqueFilter}`);
         }
-        if (filter.originFilter) {
+
+		if (filter.originFilter) {
             out.push(`keuken:${filter.originFilter}`);
         }
-        return out.join('|');
-    }
+
+		return out.join('|');
+
+	}
+
 }
 
 /**

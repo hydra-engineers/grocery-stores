@@ -1,10 +1,4 @@
-import {
-	GroceryStore,
-	PaginationOptions,
-	RequestOptions,
-	KeyValuePairs
-} from '../../../core';
-
+import { GroceryStore, PaginationOptions, RequestOptions, KeyValuePairs } from '../../../core';
 import { SingleProductModel } from './productModel';
 import { ProductQueryModel } from './productQueryModel';
 
@@ -22,10 +16,12 @@ export class Product extends GroceryStore {
      */
     async getProductFromId(
         productId: number,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<SingleProductModel> {
-        return await this.client.get(`mobile-services/product/detail/v4/fir/${productId}`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`mobile-services/product/detail/v4/fir/${productId}`, requestOptions);
+
+	}
 
     /**
      * Get products from given product name
@@ -40,9 +36,10 @@ export class Product extends GroceryStore {
     async getProductsFromName(
         productName: string,
         options?: ProductOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<ProductQueryModel> {
-        // We make a new query since we can only have the 'sortOn' and 'filters' fields if those options are provided
+
+		// We make a new query since we can only have the 'sortOn' and 'filters' fields if those options are provided
         const totalQuery: KeyValuePairs = {
             query: productName,
             sortOn: (options?.sort ?? '').toString(),
@@ -50,36 +47,47 @@ export class Product extends GroceryStore {
             page: (options?.page ?? 0).toString(),
             size: (options?.size ?? 10).toString()
         };
-        if (options?.filter) {
+
+		if (options?.filter) {
             totalQuery['filters'] = this.translateProductFilterToQuery(options.filter);
         }
-        return await this.client.get(`mobile-services/product/search/v2`, {
+
+		return await this.client.get(`mobile-services/product/search/v2`, {
             query: {
                 ...totalQuery
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
 
     /**
      * Translates the product filters to a usable filter query
      */
     private translateProductFilterToQuery(filter: ProductFilter): string {
-        const out: string[] = [];
-        if (filter.brand) {
+
+		const out: string[] = [];
+
+		if (filter.brand) {
             out.push(`brand=${filter.brand}`);
         }
-        if (filter.type) {
+
+		if (filter.type) {
             out.push(`taxonomy=${filter.type}`);
         }
-        if (filter.property) {
+
+		if (filter.property) {
             out.push(`property=${filter.property.join(',')}`);
         }
-        if (filter.bonus) {
+
+		if (filter.bonus) {
             out.push(`bonus=Bonus`);
         }
-        return out.join('|');
-    }
+
+		return out.join('|');
+
+	}
+
 }
 
 /**

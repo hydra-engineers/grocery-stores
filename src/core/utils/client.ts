@@ -112,8 +112,10 @@ export class Client implements ClientMeta {
         auth?: boolean,
         fullResponse?: boolean
     ) {
-        return this.request(path, "PUT", options, body, fullResponse, auth);
-    }
+
+		return this.request(path, "PUT", options, body, fullResponse, auth);
+
+	}
 
     /**
      * POST request
@@ -132,8 +134,10 @@ export class Client implements ClientMeta {
         auth?: boolean,
         fullResponse?: boolean
     ) {
-        return this.request(path, "POST", options, body, fullResponse, auth);
-    }
+
+		return this.request(path, "POST", options, body, fullResponse, auth);
+
+	}
 
     /**
      * GET request
@@ -149,8 +153,10 @@ export class Client implements ClientMeta {
         auth: boolean = false,
         fullResponse: boolean = false
     ) {
-        return this.request(path, "GET", options, undefined, fullResponse, auth);
-    }
+
+		return this.request(path, "GET", options, undefined, fullResponse, auth);
+
+	}
 
     /**
      * Generic request method
@@ -169,7 +175,8 @@ export class Client implements ClientMeta {
         fullResponse: boolean = false,
         auth: boolean = false,
     ) {
-        // from: albert-heijn
+
+		// from: albert-heijn
         if (auth) {
             switch (this.id) {
                 case "ah":
@@ -187,30 +194,38 @@ export class Client implements ClientMeta {
                     break;
             }
         }
-        // Since a token is needed for every request, just always add it
+
+		// Since a token is needed for every request, just always add it
         const headers: KeyValuePairs = this.createHeader(options?.headers, auth);
         const url = this.createURL(path, options?.query);
-        body = typeof body == 'object' ? JSON.stringify(body) : (typeof body == 'string' ? body : undefined)
-        if (this.options.verbose) {
+
+		body = typeof body == 'object' ? JSON.stringify(body) : (typeof body == 'string' ? body : undefined)
+
+		if (this.options.verbose) {
             console.log(url);
             console.log(method);
             console.log(headers);
             void (body && console.log(body));
         }
-        const response = await this.http.request({
+
+		const response = await this.http.request({
             method,
             url,
             headers,
             data: body
         });
-        // Throw error if response not ok
+
+		// Throw error if response not ok
         if (!response.statusText) {
             const text = response.data;
             throw new Error(`${response.statusText}: ${text}`);
         }
-        if (fullResponse) return response;
-        return response.data;
-    }
+
+		if (fullResponse) return response;
+
+		return response.data;
+
+	}
 
     /**
      * Helper function to create headers for request
@@ -220,13 +235,15 @@ export class Client implements ClientMeta {
         header: KeyValuePairs = {},
         auth: boolean = false
     ): KeyValuePairs {
-        const headers: KeyValuePairs = {
+
+		const headers: KeyValuePairs = {
             'Content-Type': 'application/json',
             'User-Agent': `${this.id}-wrapper`,
             ...this.additional_headers,
             ...header
         };
-        if (auth) {
+
+		if (auth) {
             if (this.tokenHandler) {
                 this.tokenHandler.generateToken()
                 .then((token) => {
@@ -248,9 +265,12 @@ export class Client implements ClientMeta {
             } else if (!this.tokenHandler) {
                 throw new Error('You must be logged in to use this function');
             }
-        }
-        return headers
-    }
+
+		}
+
+		return headers
+
+	}
 
     /**
      * Helper function to create request URL
@@ -261,12 +281,16 @@ export class Client implements ClientMeta {
         path: string,
         query?: KeyValuePairs
     ): string {
-        let url: string  = this.endpoint + path;
-        if (query) {
+
+		let url: string  = this.endpoint + path;
+
+		if (query) {
             const params = new URLSearchParams(query);
             url += `?${params}`;
         }
-        return url;
-    }
+
+		return url;
+
+	}
 
 }

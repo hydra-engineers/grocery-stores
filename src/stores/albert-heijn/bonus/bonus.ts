@@ -1,8 +1,5 @@
 import { format } from 'date-fns';
-import {
-	GroceryStore,
-	RequestOptions,
-} from '../../../core';
+import { GroceryStore, RequestOptions } from '../../../core';
 import { BonusModel, BonusSectionModel, BonusSegmentModel } from './bonusModel';
 
 export interface BonusSegmentOptions {
@@ -12,12 +9,15 @@ export interface BonusSegmentOptions {
 }
 
 export class Bonus extends GroceryStore {
-    /**
+
+	/**
      * Returns current bonus sections
      */
-    async getCurrentBonus(additionalRequestOptions?: RequestOptions): Promise<BonusModel> {
-        return await this.client.get('mobile-services/bonuspage/v1/metadata', additionalRequestOptions);
-    }
+    async getCurrentBonus(requestOptions?: RequestOptions): Promise<BonusModel> {
+
+		return await this.client.get('mobile-services/bonuspage/v1/metadata', requestOptions);
+
+	}
 
     /**
      * Returns bonus sections and products from section ID
@@ -25,16 +25,18 @@ export class Bonus extends GroceryStore {
      */
     async getBonusSection(
         sectionId: number,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<BonusSectionModel> {
-        return await this.client.get('mobile-services/bonuspage/v1/spotlight', {
+
+		return await this.client.get('mobile-services/bonuspage/v1/spotlight', {
             query: {
                 application: 'AHWEBSHOP',
                 sectionId: sectionId.toString()
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
 
     /**
      * Returns bonus sections and products for given date
@@ -42,18 +44,21 @@ export class Bonus extends GroceryStore {
      */
     async getBonusSectionFromDate(
         date: Date,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<BonusSectionModel> {
-        // Format date to YYYY-MM-DD
+
+		// Format date to YYYY-MM-DD
         const formattedDate = format(date, 'yyyy-MM-dd');
-        return await this.client.get('mobile-services/bonuspage/v1/spotlight', {
+
+		return await this.client.get('mobile-services/bonuspage/v1/spotlight', {
             query: {
                 application: 'AHWEBSHOP',
                 bonusStartDate: formattedDate
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
 
     /**
      * Returns bonus group and list of products for the bonus group with the given segment ID
@@ -64,17 +69,21 @@ export class Bonus extends GroceryStore {
      */
     async getProductsFromSegment(
         options: BonusSegmentOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<BonusSegmentModel> {
-        // Format date to YYYY-MM-DD
+
+		// Format date to YYYY-MM-DD
         const formattedDate = options.date ? format(options.date, 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd');
-        return await this.client.get('mobile-services/bonuspage/v1/segment', {
+
+		return await this.client.get('mobile-services/bonuspage/v1/segment', {
             query: {
                 segmentId: options.segmentId.toString(),
                 date: formattedDate,
                 includeActivatableDiscount: options.includeActivatableDiscount ? 'true' : 'false'
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
+
 }

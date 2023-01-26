@@ -1,25 +1,23 @@
-import {
-	GroceryStore,
-	PaginationOptions,
-	RequestOptions
-} from '../../../core';
-
+import { GroceryStore, PaginationOptions, RequestOptions } from '../../../core';
 import { RecipeModel } from './recipeModel';
 import { RecipeQueryModel } from './recipeQueryModel';
 
 export interface RecipeOptions extends PaginationOptions {}
 
 export class Recipe extends GroceryStore {
+
     /**
      * Get recipe from ID
      * @param recipeId Recipe ID
      */
     async getRecipeFromId(
 		recipeId: number,
-		additionalRequestOptions?: RequestOptions
+		requestOptions?: RequestOptions
 	): Promise<RecipeModel> {
-        return await this.client.get(`recipes/${recipeId}`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`recipes/${recipeId}`, requestOptions);
+
+	}
 
     /**
      * Get recipes from given recipe name
@@ -31,18 +29,21 @@ export class Recipe extends GroceryStore {
     async getRecipesFromName(
         recipeName: string,
         options?: RecipeOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<RecipeModel[]> {
-        const recipes: RecipeQueryModel = await this.client.get(`recipes`, {
+
+		const recipes: RecipeQueryModel = await this.client.get(`recipes`, {
             query: {
                 q: recipeName,
                 offset: (options?.offset || 0).toString(),
                 limit: (options?.limit || 10).toString()
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-        const result: RecipeModel[] = [];
-        for (var key in recipes.recipes.data) {
+
+		const result: RecipeModel[] = [];
+
+		for (var key in recipes.recipes.data) {
             const recipe: RecipeModel = {
                 recipe: {
                     data: recipes.recipes.data[key]
@@ -50,8 +51,10 @@ export class Recipe extends GroceryStore {
             };
             result.push(recipe);
         }
-        return result;
-    }
+
+		return result;
+
+	}
 
     /**
      * Get recipes from given filter ID
@@ -63,18 +66,21 @@ export class Recipe extends GroceryStore {
     async getRecipesFromFilterId(
         filterId: number,
         options?: RecipeOptions,
-        additionalRequestOptions?: RequestOptions
-    ) {
-        const recipes: RecipeQueryModel = await this.client.get(`recipes`, {
+        requestOptions?: RequestOptions
+    ): Promise<RecipeModel[]> {
+
+		const recipes: RecipeQueryModel = await this.client.get(`recipes`, {
             query: {
                 filterId: filterId.toString(),
                 offset: (options?.offset || 0).toString(),
                 limit: (options?.limit || 10).toString()
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-        const result: RecipeModel[] = [];
-        for (var key in recipes.recipes.data) {
+
+		const result: RecipeModel[] = [];
+
+		for (var key in recipes.recipes.data) {
             const recipe: RecipeModel = {
                 recipe: {
                     data: recipes.recipes.data[key]
@@ -82,6 +88,9 @@ export class Recipe extends GroceryStore {
             };
             result.push(recipe);
         }
-        return result;
-    }
+
+		return result;
+
+	}
+
 }

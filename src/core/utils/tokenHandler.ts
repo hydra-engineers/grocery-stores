@@ -51,8 +51,10 @@ export class TokenHandler {
      * Returns a token and (re-)creates one if needed
      */
     generateToken(): Promise<AHToken | string> {
-        return new Promise<AHToken | string>(async (resolve, reject) => {
-            switch (this.client.id) {
+
+		return new Promise<AHToken | string>(async (resolve, reject) => {
+
+			switch (this.client.id) {
                 case "ah":
                     // If previous token expired or we don't have 1 yet, create (a new) one
                     if (!this.tokens.ah) {
@@ -96,7 +98,9 @@ export class TokenHandler {
                     resolve("no_token_found")
                     return;
             }
-        })
-    }
+
+		})
+
+	}
 
 }

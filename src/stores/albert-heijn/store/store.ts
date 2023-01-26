@@ -1,11 +1,9 @@
-import {
-	GroceryStore,
-	RequestOptions
-} from '../../../core';
+import { GroceryStore, RequestOptions } from '../../../core';
 import { StoreModel, StoreQueryModel } from './storeModel';
 
 export class Store extends GroceryStore {
-    /**
+
+	/**
      * Returns stores closest to the given location (sorted by distance ascending)
      * @param latitude Latitude (degree)
      * @param longitude Longitude (degree)
@@ -15,9 +13,10 @@ export class Store extends GroceryStore {
         latitude: number,
         longitude: number,
         maxResults?: number,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<StoreQueryModel> {
-        return await this.client.post(
+
+		return await this.client.post(
             'graphql',
             {
                 operationName: 'SearchStoresQuery',
@@ -29,9 +28,10 @@ export class Store extends GroceryStore {
                     openingHours: []
                 }
             },
-            additionalRequestOptions
+            requestOptions
         );
-    }
+
+	}
 
     /**
      * Returns only the closest store to the given location
@@ -41,9 +41,13 @@ export class Store extends GroceryStore {
     async getClosestStoreFromLocation(
         latitude: number,
         longitude: number,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<StoreModel> {
-        const stores = await this.getStoresFromLocation(latitude, longitude, 1, additionalRequestOptions);
-        return stores.data.stores.result[0];
-    }
+
+		const stores = await this.getStoresFromLocation(latitude, longitude, 1, requestOptions);
+
+		return stores.data.stores.result[0];
+
+	}
+
 }

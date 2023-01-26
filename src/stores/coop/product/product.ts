@@ -1,9 +1,4 @@
-import {
-	GroceryStore,
-	PaginationOptions,
-	RequestOptions
-} from '../../../core';
-
+import { GroceryStore, PaginationOptions, RequestOptions } from '../../../core';
 import { ProductModel, ProductQueryModel } from './productModel';
 
 export interface ProductOptions extends PaginationOptions {
@@ -15,16 +10,19 @@ export interface ProductOptions extends PaginationOptions {
 }
 
 export class Product extends GroceryStore {
-    /**
+
+	/**
      * Get product from ID
      * @param productId Product ID (sku, 13 digits)
      */
     async getProductFromId(
         productId: number,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<ProductModel> {
-        return await this.client.get(`-;loc=nl_NL;cur=EUR/products/${productId}`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`-;loc=nl_NL;cur=EUR/products/${productId}`, requestOptions);
+
+	}
 
     /**
      * Get products ffrom given product name
@@ -41,9 +39,10 @@ export class Product extends GroceryStore {
     async getProductsFromName(
         productName: string,
         options?: ProductOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<ProductQueryModel> {
-        return await this.client.get('-/culios/products', {
+
+		return await this.client.get('-/culios/products', {
             query: {
                 searchTerm: productName,
                 amount: (options?.amount ?? 10).toString(),
@@ -56,9 +55,11 @@ export class Product extends GroceryStore {
                 productFilter: options?.productFilter ?? '',
                 filters: options?.filters ?? ''
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
+
 }
 
 export enum ProductFilter {

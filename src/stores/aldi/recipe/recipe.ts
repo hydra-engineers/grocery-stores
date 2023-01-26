@@ -1,8 +1,4 @@
-import {
-	GroceryStore,
-	RequestOptions
-} from '../../../core';
-
+import { GroceryStore, RequestOptions } from '../../../core';
 import { ExtendedRecipeModel, RecipeQueryModel } from './recipeModel';
 
 export interface RecipeOptions {
@@ -10,16 +6,19 @@ export interface RecipeOptions {
 }
 
 export class Recipe extends GroceryStore {
-    /**
+
+	/**
      * Gets recipe from ID
      * @param recipeId Recipe ID, formatted as "rezepte/{category}/{slug}.json"
      */
     async getRecipeFromId(
         recipeId: string,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<ExtendedRecipeModel> {
-        return await this.client.get(`recipedetail/${recipeId}.json`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`recipedetail/${recipeId}.json`, requestOptions);
+
+	}
 
     /**
      * Get recipes featured on the front page
@@ -28,11 +27,14 @@ export class Recipe extends GroceryStore {
      */
     async getFeaturedRecipes(
         options?: RecipeOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<RecipeQueryModel> {
-        const size = options?.amount || 20;
-        return await this.client.get(`recipes/size=${size}.json`, additionalRequestOptions);
-    }
+
+		const size = options?.amount || 20;
+
+		return await this.client.get(`recipes/size=${size}.json`, requestOptions);
+
+	}
 
     /**
      * Get recipes from given recipe name (will return all of them)
@@ -40,8 +42,11 @@ export class Recipe extends GroceryStore {
      */
     async getRecipesFromName(
         recipeName: string,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<RecipeQueryModel> {
-        return await this.client.get(`recipesearch/${recipeName}.json`, additionalRequestOptions);
-    }
+
+		return await this.client.get(`recipesearch/${recipeName}.json`, requestOptions);
+
+	}
+
 }

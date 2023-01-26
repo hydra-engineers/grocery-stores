@@ -1,9 +1,4 @@
-import {
-	GroceryStore,
-	PaginationOptions,
-	RequestOptions
-} from '../../../core';
-
+import { GroceryStore, PaginationOptions, RequestOptions } from '../../../core';
 import { RecipeQueryModel, RecipeIngredientModel } from './recipeModel';
 
 export interface SingleRecipeOptions {
@@ -17,6 +12,7 @@ export interface RecipeOptions extends PaginationOptions {
 }
 
 export class Recipe extends GroceryStore {
+
     /**
      * Gets ingredients from recipe ID
      * @param recipeId Recipe ID (5 digits)
@@ -27,16 +23,18 @@ export class Recipe extends GroceryStore {
     async getIngredientsFromRecipe(
         recipeId: number,
         options?: SingleRecipeOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<RecipeIngredientModel[]> {
-        return await this.client.get(`-;loc=nl_NL;cur=EUR/recipes/${recipeId}/ingredients`, {
+
+		return await this.client.get(`-;loc=nl_NL;cur=EUR/recipes/${recipeId}/ingredients`, {
             query: {
                 persons: (options?.persons ?? 1).toString(),
                 primary: (options?.primary ?? true).toString()
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
 
     /**
      * Get recipes from given recipe name
@@ -50,9 +48,10 @@ export class Recipe extends GroceryStore {
     async getRecipesFromName(
         recipeName: string,
         options?: RecipeOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<RecipeQueryModel> {
-        return await this.client.get('-;loc=nl_NL;cur=EUR/recipes/search', {
+
+		return await this.client.get('-;loc=nl_NL;cur=EUR/recipes/search', {
             query: {
                 searchterm: recipeName,
                 prioritized: (options?.prioritized ?? true).toString(),
@@ -60,9 +59,11 @@ export class Recipe extends GroceryStore {
                 page: (options?.offset ?? 1).toString(),
                 sort_fields: options?.sort ?? ''
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-    }
+
+	}
+
 }
 
 export enum RecipeSortOptions {

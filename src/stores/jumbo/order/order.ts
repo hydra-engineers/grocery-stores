@@ -1,30 +1,32 @@
 import { fromUnixTime } from 'date-fns';
-import {
-	GroceryStore,
-	PaginationOptions,
-	RequestOptions,
-	KeyValuePairs
-} from '../../../core';
+import { GroceryStore, PaginationOptions, RequestOptions } from '../../../core';
 import { Delivery, DeliveryDate, OrderModel, Shipping, ShippingDate } from './orderModel';
 import { OrderQueryModel, OrderResponse, SingleOrderQueryModel } from './orderQueryModel';
 
 interface OrderOptions extends PaginationOptions {}
 
 export class Order extends GroceryStore {
-    /**
+
+	/**
      * Gets order from ID
      * @param orderId Order ID
      */
-    async getMyOrderById(orderId: number, additionalRequestOptions?: RequestOptions): Promise<OrderModel> {
-        // Get order from endpoint
+    async getMyOrderById(
+		orderId: number,
+		requestOptions?: RequestOptions
+	): Promise<OrderModel> {
+
+		// Get order from endpoint
         const order: SingleOrderQueryModel = await this.client.get(
             `users/me/orders/${orderId}`,
-            additionalRequestOptions,
+            requestOptions,
             this.auth
         );
-        // Convert times to dates
+
+		// Convert times to dates
         return this.convertOrderResponseToOrderModel(order.order.data);
-    }
+
+	}
 
     /**
      * Returns all the users' orders
@@ -34,9 +36,10 @@ export class Order extends GroceryStore {
      */
     async getMyOrders(
         options?: OrderOptions,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<OrderModel[]> {
-        // Query all orders as orderQueryModel
+
+		// Query all orders as orderQueryModel
         const orders: OrderQueryModel = await this.client.get(
             `users/me/orders`,
             {
@@ -44,23 +47,29 @@ export class Order extends GroceryStore {
                     offset: (options?.offset || 0).toString(),
                     count: (options?.limit || 10).toString()
                 },
-                ...additionalRequestOptions
+                ...requestOptions
             },
             this.auth
         );
-        // Convert responses to models
+
+		// Convert responses to models
         return orders.orders.data.map((orderResponse) => {
             return this.convertOrderResponseToOrderModel(orderResponse);
         });
-    }
+
+	}
 
     /**
      * Shortcut function to return latest (first) order
      */
-    async getMyLatestOrder(additionalRequestOptions?: RequestOptions): Promise<OrderModel> {
-        const orders = await this.getMyOrders({ limit: 1 }, additionalRequestOptions);
+    async getMyLatestOrder(
+		requestOptions?: RequestOptions
+	): Promise<OrderModel> {
+
+		const orders = await this.getMyOrders({ limit: 1 }, requestOptions);
         return orders[0];
-    }
+
+	}
 
     /**
      * Returns all of the user's orders with a certain status
@@ -68,33 +77,44 @@ export class Order extends GroceryStore {
      */
     async getMyOrdersByStatus(
         status: OrderStatus,
-        additionalRequestOptions?: RequestOptions
+        requestOptions?: RequestOptions
     ): Promise<OrderModel[]> {
-        const orders = await this.getMyOrders(undefined, additionalRequestOptions);
-        return orders.filter((order) => {
+
+		const orders = await this.getMyOrders(undefined, requestOptions);
+
+		return orders.filter((order) => {
             return order.order.data.status === status;
         });
-    }
+
+	}
 
     /**
      * Gets the user's relevant orders (which includes shipping time)
      */
-    async getMyRelevantOrders(additionalRequestOptions?: RequestOptions): Promise<OrderModel[]> {
-        const orders = await this.getMyOrders(undefined, {
+    async getMyRelevantOrders(
+		requestOptions?: RequestOptions
+	): Promise<OrderModel[]> {
+
+		const orders = await this.getMyOrders(undefined, {
             query: {
                 relevant: 'true'
             },
-            ...additionalRequestOptions
+            ...requestOptions
         });
-        return orders;
-    }
+
+		return orders;
+
+	}
 
     /**
      * Converts response to actual data by first converting unix timestamps to dates
      * @param order OrderResponse to convert
      */
-    private convertOrderResponseToOrderModel(order: OrderResponse): OrderModel {
-        // Simply convert the delivery object and cut-off date
+    private convertOrderResponseToOrderModel(
+		order: OrderResponse
+	): OrderModel {
+
+		// Simply convert the delivery object and cut-off date
         const orderModel: OrderModel = {
             order: {
                 data: {
@@ -105,35 +125,47 @@ export class Order extends GroceryStore {
                 }
             }
         };
-        // Add shipping if required
+
+		// Add shipping if required
         if (order.shipping) {
             orderModel.order.data.shipping = this.convertShippingTimesToDates(order.shipping);
         }
-        return orderModel;
-    }
+
+		return orderModel;
+
+	}
 
     /**
      * Converts shipping unix timestamps of order to actual dates
      * @param shipping order.data.shipping
      */
-    private convertShippingTimesToDates(shipping: Shipping): ShippingDate {
-        const shippingDate: ShippingDate = {
+    private convertShippingTimesToDates(
+		shipping: Shipping
+	): ShippingDate {
+
+		const shippingDate: ShippingDate = {
             plannedETAStart: this.convertUnixDateToDate(shipping.plannedETAStart),
             plannedETAEnd: this.convertUnixDateToDate(shipping.plannedETAEnd),
             unknownLiveETA: shipping.unknownLiveETA
         };
-        if (shipping.liveETA) {
+
+		if (shipping.liveETA) {
             shippingDate.liveETA = this.convertUnixDateToDate(shipping.liveETA);
         }
-        return shippingDate;
-    }
+
+		return shippingDate;
+
+	}
 
     /**
      * Converts delivery unix timestamps of order to actual dates
      * @param delivery order.data.delivery
      */
-    private convertDeliveryTimesToDates(delivery: Delivery): DeliveryDate {
-        // First convert these 3 separately
+    private convertDeliveryTimesToDates(
+		delivery: Delivery
+	): DeliveryDate {
+
+		// First convert these 3 separately
         const date = this.convertUnixDateToDate(delivery.date);
         const startDate = this.convertUnixDateToDate(delivery.startDateTime);
         const endDate = this.convertUnixDateToDate(delivery.endDateTime);
@@ -156,21 +188,31 @@ export class Order extends GroceryStore {
         }
 
         return deliveryDate;
-    }
+
+	}
 
     /**
      * Converts given unix timestamp to a Date
      */
-    private convertUnixDateToDate(unixDate: number): Date {
-        return fromUnixTime(this.formatUnixTimestamp(unixDate));
-    }
+    private convertUnixDateToDate(
+		unixDate: number
+	): Date {
+
+		return fromUnixTime(this.formatUnixTimestamp(unixDate));
+
+	}
 
     /**
      * Strips the last 3 digits off the timestamp to properly convert
      */
-    private formatUnixTimestamp(unixDate: number): number {
-        return (unixDate - (unixDate % 1000)) / 1000;
-    }
+    private formatUnixTimestamp(
+		unixDate: number
+	): number {
+
+		return (unixDate - (unixDate % 1000)) / 1000;
+
+	}
+
 }
 
 export enum OrderStatus {
