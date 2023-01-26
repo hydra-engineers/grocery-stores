@@ -1,18 +1,20 @@
-import { Coop, Recipe, RecipeSortOptions } from '../src';
+import { CoopExports } from '../../../src';
+
+const { Coop, Recipe, RecipeSortOptions } = CoopExports;
 
 describe('Coop Recipe', () => {
     it('should return a Recipe object', () => {
-        const client = new Coop();
-        expect(client.recipe()).toBeDefined();
-        expect(client.recipe()).toBeInstanceOf(Recipe);
+        const coop = new Coop();
+        expect(coop.recipe()).toBeDefined();
+        expect(coop.recipe()).toBeInstanceOf(Recipe);
     });
 
     describe('getIngredientsFromRecipe', () => {
         it('should have been called with default parameters', async () => {
-            const client = new Coop();
-            const getMock = jest.spyOn(client, 'get');
+            const coop = new Coop();
+            const getMock = jest.spyOn(coop.getClient(), 'get');
             getMock.mockImplementation(() => Promise.resolve({}));
-            await client.recipe().getIngredientsFromRecipe(1);
+            await coop.recipe().getIngredientsFromRecipe(1);
             expect(getMock).toHaveBeenCalledWith('-;loc=nl_NL;cur=EUR/recipes/1/ingredients', {
                 query: {
                     persons: '1',
@@ -22,10 +24,10 @@ describe('Coop Recipe', () => {
         });
 
         it('should have been called with provided options', async () => {
-            const client = new Coop();
-            const getMock = jest.spyOn(client, 'get');
+            const coop = new Coop();
+            const getMock = jest.spyOn(coop.getClient(), 'get');
             getMock.mockImplementation(() => Promise.resolve({}));
-            await client.recipe().getIngredientsFromRecipe(1, {
+            await coop.recipe().getIngredientsFromRecipe(1, {
                 persons: 2,
                 primary: false
             });
@@ -40,10 +42,10 @@ describe('Coop Recipe', () => {
 
     describe('getRecipesFromName', () => {
         it('should have been called with default parameters', async () => {
-            const client = new Coop();
-            const getMock = jest.spyOn(client, 'get');
+            const coop = new Coop();
+            const getMock = jest.spyOn(coop.getClient(), 'get');
             getMock.mockImplementation(() => Promise.resolve({}));
-            await client.recipe().getRecipesFromName('test');
+            await coop.recipe().getRecipesFromName('test');
             expect(getMock).toHaveBeenCalledWith('-;loc=nl_NL;cur=EUR/recipes/search', {
                 query: {
                     searchterm: 'test',
@@ -56,10 +58,10 @@ describe('Coop Recipe', () => {
         });
 
         it('should have been called with provided options', async () => {
-            const client = new Coop();
-            const getMock = jest.spyOn(client, 'get');
+            const coop = new Coop();
+            const getMock = jest.spyOn(coop.getClient(), 'get');
             getMock.mockImplementation(() => Promise.resolve({}));
-            await client.recipe().getRecipesFromName('test', {
+            await coop.recipe().getRecipesFromName('test', {
                 amount: 5,
                 offset: 5,
                 prioritized: false,

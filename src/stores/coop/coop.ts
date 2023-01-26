@@ -12,7 +12,7 @@ export class Coop extends GroceryStore {
 
     constructor(options?: ClientOptions) {
 
-        super(new Client("plus", options), false);
+        super(new Client("coop", options), false);
 
         this.coopProduct = new Product(this.client, this.auth);
         this.coopRecipe = new Recipe(this.client, this.auth);

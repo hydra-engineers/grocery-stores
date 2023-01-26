@@ -1,28 +1,29 @@
-import { Coop, Product, ProductFilter } from '../src';
+import { CoopExports } from '../../../src';
+const { Coop, Product, ProductFilter } = CoopExports;
 
 describe('Coop Product', () => {
     it('should return a Product object', () => {
-        const client = new Coop();
-        expect(client.product()).toBeDefined();
-        expect(client.product()).toBeInstanceOf(Product);
+        const coop = new Coop();
+        expect(coop.product()).toBeDefined();
+        expect(coop.product()).toBeInstanceOf(Product);
     });
 
     describe('getProductFromId', () => {
         it('should have been called with correct parameters', async () => {
-            const client = new Coop();
-            const getMock = jest.spyOn(client, 'get');
+            const coop = new Coop();
+            const getMock = jest.spyOn(coop.getClient(), 'get');
             getMock.mockImplementation(() => Promise.resolve({}));
-            await client.product().getProductFromId(1);
+            await coop.product().getProductFromId(1);
             expect(getMock).toHaveBeenCalledWith('-;loc=nl_NL;cur=EUR/products/1', undefined);
         });
     });
 
     describe('getProductsFromName', () => {
         it('should have been called with default parameters', async () => {
-            const client = new Coop();
-            const getMock = jest.spyOn(client, 'get');
+            const coop = new Coop();
+            const getMock = jest.spyOn(coop.getClient(), 'get');
             getMock.mockImplementation(() => Promise.resolve({}));
-            await client.product().getProductsFromName('test');
+            await coop.product().getProductsFromName('test');
             expect(getMock).toHaveBeenCalledWith('-/culios/products', {
                 query: {
                     searchTerm: 'test',
@@ -38,30 +39,30 @@ describe('Coop Product', () => {
         });
 
         it('should have been called with provided options', async () => {
-            const client = new Coop();
-            const getMock = jest.spyOn(client, 'get');
+            const coop = new Coop();
+            const getMock = jest.spyOn(coop.getClient(), 'get');
             getMock.mockImplementation(() => Promise.resolve({}));
-            await client.product().getProductsFromName('test', {
-                amount: 5,
-                offset: 5,
-                attributeGroup: '',
-                attrs: '',
-                filters: ProductFilter.GlutenFree,
-                productFilter: 'productFilter',
-                returnSortKeys: false
-            });
+            await coop.product().getProductsFromName('test', {
+				amount: 5,
+				offset: 5,
+				attributeGroup: '',
+				attrs: '',
+				filters: ProductFilter.GlutenFree,
+				productFilter: 'productFilter',
+				returnSortKeys: false
+			});
             expect(getMock).toHaveBeenCalledWith('-/culios/products', {
-                query: {
-                    searchTerm: 'test',
-                    amount: '5',
-                    offset: '5',
-                    attrs: '',
-                    attributeGroup: '',
-                    returnSortKeys: 'false',
-                    productFilter: 'productFilter',
-                    filters: ProductFilter.GlutenFree
-                }
-            });
+				query: {
+					searchTerm: 'test',
+					amount: '5',
+					offset: '5',
+					attrs: '',
+					attributeGroup: '',
+					returnSortKeys: 'false',
+					productFilter: 'productFilter',
+					filters: ProductFilter.GlutenFree
+				}
+			});
         });
     });
 });
