@@ -1,0 +1,20 @@
+[submodule "api-wrapper-albert-heijn"]
+	path = submodules/albert-heijn
+	url = https://github.com/hydra-engineers/api-wrapper-albert-heijn.git
+	branch = stable
+[submodule "api-wrapper-aldi"]
+	path = submodules/aldi
+	url = https://github.com/hydra-engineers/api-wrapper-aldi.git
+	branch = stable
+[submodule "api-wrapper-coop"]
+	path = submodules/coop
+	url = https://github.com/hydra-engineers/api-wrapper-coop.git
+	branch = stable
+[submodule "api-wrapper-jumbo"]
+	path = submodules/jumbo
+	url = https://github.com/hydra-engineers/api-wrapper-jumbo.git
+	branch = stable
+[submodule "api-wrapper-plus"]
+	path = submodules/plus
+	url = https://github.com/hydra-engineers/api-wrapper-plus.git
+	branch = stable
