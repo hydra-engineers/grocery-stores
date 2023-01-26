@@ -13,13 +13,28 @@ interface EventEmitterOptions {
 
 // core class
 export class GroceryStore extends EventEmitter {
-    constructor(
+
+	constructor(
         protected readonly client: Client,
         protected readonly auth: boolean,
         protected readonly options?: EventEmitterOptions
     ) {
         super(options);
     }
+
+	getClient(): Client {
+		return this.client;
+	}
+
+	getAuth(): boolean {
+		return this.auth;
+	}
+
+	getEventEmiterOptions(): EventEmitterOptions {
+		if (this.options) return this.options;
+		else return {};
+	}
+
 }
 
 export interface PaginationOptions {
