@@ -1,5 +1,5 @@
 // @local/modules
-import { GroceryStore, GroceryStoreOptions } from '../core';
+import { GroceryStoreObject, GroceryStore, GroceryStoreOptions } from '../core';
 /*
 import { TokenHandler } from './auth/tokenHandler';
 import { Product } from './product/product';
@@ -9,10 +9,9 @@ import { Store } from './store/store';
 import { Category } from './category/category';
 */
 
-export class AH extends GroceryStore {
+export class AH extends GroceryStoreObject {
 
     /*
-    public readonly tokenHandler: TokenHandler;
     private readonly AHBonus: Bonus;
     private readonly AHCategory: Category;
     private readonly AHProduct: Product;
@@ -22,7 +21,7 @@ export class AH extends GroceryStore {
 
     constructor(options?: GroceryStoreOptions) {
 
-        super("ah", options);
+        super(new GroceryStore("ah", options), true);
 
         /*
         this.AHBonus = new Bonus(this);

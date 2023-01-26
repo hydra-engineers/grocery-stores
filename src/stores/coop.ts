@@ -1,11 +1,11 @@
 // @local/modules
-import { GroceryStore, GroceryStoreOptions } from '../core';
+import { GroceryStoreObject, GroceryStore, GroceryStoreOptions } from '../core';
 /*
 import { Product } from './product';
 import { Recipe } from './recipe';
 */
 
-export class Coop extends GroceryStore {
+export class Coop extends GroceryStoreObject {
 
     /*
     private readonly coopProduct: Product;
@@ -14,7 +14,7 @@ export class Coop extends GroceryStore {
 
     constructor(options?: GroceryStoreOptions) {
 
-        super("coop", options);
+        super(new GroceryStore("plus", options), false);
 
         /*
         this.coopProduct = new Product(this);

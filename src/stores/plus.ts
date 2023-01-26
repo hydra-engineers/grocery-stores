@@ -1,5 +1,5 @@
 // @local/modules
-import { GroceryStore, GroceryStoreOptions } from '../core';
+import { GroceryStoreObject, GroceryStore, GroceryStoreOptions } from '../core';
 /*
 import { Product } from './product/product';
 import { Recipe } from './recipe/recipe';
@@ -7,7 +7,7 @@ import { Promotion } from './promotion/promotion';
 import { Store } from './store/store';
 */
 
-export class Plus extends GroceryStore {
+export class Plus extends GroceryStoreObject {
 
     /*
     private readonly plusProduct: Product;
@@ -18,7 +18,7 @@ export class Plus extends GroceryStore {
 
     constructor(options?: GroceryStoreOptions) {
 
-        super("plus", options)
+        super(new GroceryStore("plus", options), false);
 
         /*
         this.plusProduct = new Product(this);

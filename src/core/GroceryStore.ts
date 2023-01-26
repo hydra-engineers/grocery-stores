@@ -89,6 +89,7 @@ export class GroceryStore {
             })
         } : undefined));
 
+        // the seperate classes
         this.tokenHandler = new TokenHandler(this);
 
     }

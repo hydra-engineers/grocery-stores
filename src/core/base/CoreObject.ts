@@ -16,7 +16,7 @@ export class GroceryStoreObject extends EventEmitter {
     constructor(
         protected readonly store: GroceryStore,
         protected readonly auth: boolean,
-        protected readonly options: EventEmitterOptions
+        protected readonly options?: EventEmitterOptions
     ) {
         super(options);
     }

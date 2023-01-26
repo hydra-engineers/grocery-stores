@@ -1,7 +1,6 @@
 // @local/modules
-import { GroceryStore, GroceryStoreOptions } from '../core';
+import { GroceryStoreObject, GroceryStore, GroceryStoreOptions } from '../core';
 /*
-import { TokenHandler } from './auth/tokenHandler';
 import { Product } from './product/product';
 import { Recipe } from './recipe/recipe';
 import { Promotion } from './promotion/promotion';
@@ -13,7 +12,7 @@ import { List } from './list/list';
 import { Basket } from './basket/basket';
 */
 
-export class Jumbo extends GroceryStore {
+export class Jumbo extends GroceryStoreObject {
 
     /*
     jumboBasket: Basket;
@@ -39,7 +38,7 @@ export class Jumbo extends GroceryStore {
      */
     constructor(options?: GroceryStoreOptions) {
 
-        super("jumbo", options);
+        super(new GroceryStore("jumbo", options), true);
 
         /*
         // Set separate classes

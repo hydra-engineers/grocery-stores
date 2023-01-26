@@ -1,12 +1,12 @@
 // @local/modules
-import { GroceryStore, GroceryStoreOptions } from '../core';
+import { GroceryStoreObject, GroceryStore, GroceryStoreOptions } from '../core';
 /*
 import { Product } from './product/product';
 import { Recipe } from './recipe/recipe';
 import { Promotion } from './promotion/promotion';
 */
 
-export class Aldi extends GroceryStore {
+export class Aldi extends GroceryStoreObject {
 
     /*
     private readonly aldiProduct: Product;
@@ -16,7 +16,7 @@ export class Aldi extends GroceryStore {
 
     constructor(options?: GroceryStoreOptions) {
 
-        super("aldi", options);
+        super(new GroceryStore("aldi", options), false);
 
         /*
         this.aldiProduct = new Product(this);
