@@ -106,7 +106,7 @@ export class Client implements ClientMeta {
     async put(
         path: string,
         // TODO: switch body and options response positions
-        body?: Record<string, unknown>,
+        body?: object | string,
         options?: RequestOptions,
         // TODO: switch auth and full response positions
         auth?: boolean,
