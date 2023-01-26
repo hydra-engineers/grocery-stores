@@ -1,13 +1,15 @@
-import { AdditionalRequestOptions } from '../ah';
-import { AHObject } from '../base/AHObject';
+import {
+	GroceryStore,
+	RequestOptions
+} from '../../../core';
 import { CategoryModel, SubCategoryModel } from './categoryModel';
 
-export class Category extends AHObject {
+export class Category extends GroceryStore {
     /**
      * Returns all product categories
      */
-    async getProductCategories(additionalRequestOptions?: AdditionalRequestOptions): Promise<CategoryModel[]> {
-        return await this.ah.get('mobile-services/v1/product-shelves/categories', additionalRequestOptions);
+    async getProductCategories(additionalRequestOptions?: RequestOptions): Promise<CategoryModel[]> {
+        return await this.client.get('mobile-services/v1/product-shelves/categories', additionalRequestOptions);
     }
 
     /**
@@ -16,9 +18,9 @@ export class Category extends AHObject {
      */
     async getProductSubCategories(
         categoryId: number,
-        additionalRequestOptions?: AdditionalRequestOptions
+        additionalRequestOptions?: RequestOptions
     ): Promise<SubCategoryModel[]> {
-        return await this.ah.get(
+        return await this.client.get(
             `mobile-services/v1/product-shelves/categories/${categoryId}/sub-categories`,
             additionalRequestOptions
         );

@@ -1,8 +1,10 @@
-import { AdditionalRequestOptions } from '../ah';
-import { AHObject } from '../base/AHObject';
+import {
+	GroceryStore,
+	RequestOptions
+} from '../../../core';
 import { StoreModel, StoreQueryModel } from './storeModel';
 
-export class Store extends AHObject {
+export class Store extends GroceryStore {
     /**
      * Returns stores closest to the given location (sorted by distance ascending)
      * @param latitude Latitude (degree)
@@ -13,9 +15,9 @@ export class Store extends AHObject {
         latitude: number,
         longitude: number,
         maxResults?: number,
-        additionalRequestOptions?: AdditionalRequestOptions
+        additionalRequestOptions?: RequestOptions
     ): Promise<StoreQueryModel> {
-        return await this.ah.post(
+        return await this.client.post(
             'graphql',
             {
                 operationName: 'SearchStoresQuery',
@@ -39,7 +41,7 @@ export class Store extends AHObject {
     async getClosestStoreFromLocation(
         latitude: number,
         longitude: number,
-        additionalRequestOptions?: AdditionalRequestOptions
+        additionalRequestOptions?: RequestOptions
     ): Promise<StoreModel> {
         const stores = await this.getStoresFromLocation(latitude, longitude, 1, additionalRequestOptions);
         return stores.data.stores.result[0];

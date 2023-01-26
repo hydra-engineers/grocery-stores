@@ -1,6 +1,8 @@
 import { format } from 'date-fns';
-import { AdditionalRequestOptions } from '../ah';
-import { AHObject } from '../base/AHObject';
+import {
+	GroceryStore,
+	RequestOptions,
+} from '../../../core';
 import { BonusModel, BonusSectionModel, BonusSegmentModel } from './bonusModel';
 
 export interface BonusSegmentOptions {
@@ -9,12 +11,12 @@ export interface BonusSegmentOptions {
     includeActivatableDiscount?: boolean;
 }
 
-export class Bonus extends AHObject {
+export class Bonus extends GroceryStore {
     /**
      * Returns current bonus sections
      */
-    async getCurrentBonus(additionalRequestOptions?: AdditionalRequestOptions): Promise<BonusModel> {
-        return await this.ah.get('mobile-services/bonuspage/v1/metadata', additionalRequestOptions);
+    async getCurrentBonus(additionalRequestOptions?: RequestOptions): Promise<BonusModel> {
+        return await this.client.get('mobile-services/bonuspage/v1/metadata', additionalRequestOptions);
     }
 
     /**
@@ -23,9 +25,9 @@ export class Bonus extends AHObject {
      */
     async getBonusSection(
         sectionId: number,
-        additionalRequestOptions?: AdditionalRequestOptions
+        additionalRequestOptions?: RequestOptions
     ): Promise<BonusSectionModel> {
-        return await this.ah.get('mobile-services/bonuspage/v1/spotlight', {
+        return await this.client.get('mobile-services/bonuspage/v1/spotlight', {
             query: {
                 application: 'AHWEBSHOP',
                 sectionId: sectionId.toString()
@@ -40,11 +42,11 @@ export class Bonus extends AHObject {
      */
     async getBonusSectionFromDate(
         date: Date,
-        additionalRequestOptions?: AdditionalRequestOptions
+        additionalRequestOptions?: RequestOptions
     ): Promise<BonusSectionModel> {
         // Format date to YYYY-MM-DD
         const formattedDate = format(date, 'yyyy-MM-dd');
-        return await this.ah.get('mobile-services/bonuspage/v1/spotlight', {
+        return await this.client.get('mobile-services/bonuspage/v1/spotlight', {
             query: {
                 application: 'AHWEBSHOP',
                 bonusStartDate: formattedDate
@@ -62,11 +64,11 @@ export class Bonus extends AHObject {
      */
     async getProductsFromSegment(
         options: BonusSegmentOptions,
-        additionalRequestOptions?: AdditionalRequestOptions
+        additionalRequestOptions?: RequestOptions
     ): Promise<BonusSegmentModel> {
         // Format date to YYYY-MM-DD
         const formattedDate = options.date ? format(options.date, 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd');
-        return await this.ah.get('mobile-services/bonuspage/v1/segment', {
+        return await this.client.get('mobile-services/bonuspage/v1/segment', {
             query: {
                 segmentId: options.segmentId.toString(),
                 date: formattedDate,
