@@ -51,7 +51,7 @@ export class Client implements ClientMeta {
 	readonly default_options: ClientOptions;
     readonly additional_headers: KeyValuePairs;
 
-    tokenHandler: TokenHandler;
+    tokenHandler?: TokenHandler;
 
     constructor(
 		clientId: ClientIds,
@@ -91,7 +91,8 @@ export class Client implements ClientMeta {
             })
         } : undefined));
 
-        this.tokenHandler = new TokenHandler(this);
+		if (this.id == "jumbo" || this.id == "ah")
+        	this.tokenHandler = new TokenHandler(this);
 
     }
 
@@ -176,23 +177,13 @@ export class Client implements ClientMeta {
         auth: boolean = false,
     ) {
 
-		// from: albert-heijn
         if (auth) {
-            switch (this.id) {
-                case "ah":
-                    // Make sure tokenHandler is ready (has a token)
-                    await this.tokenHandler.ready;
-                    break;
-                case "jumbo":
-                    // If auth is required and we don't have a token yet, we should create one
-                    if (!this.tokenHandler) {
-                        throw new Error(`You must be logged in to access this path: ${this.endpoint + path}`);
-                    } else {
-                        // If the tokenHandler doesn't have a token yet, make sure it gets one
-                        await this.tokenHandler.ready;
-                    }
-                    break;
-            }
+			if (!this.tokenHandler) {
+				throw new Error(`You must be logged in to access this path: ${this.endpoint + path}`);
+			} else {
+				// If the tokenHandler doesn't have a token yet, make sure it gets one
+				await this.tokenHandler.ready;
+			}
         }
 
 		// Since a token is needed for every request, just always add it
