@@ -2,8 +2,8 @@
     "id": "coop",
     "name": "Coop",
     "endpoint": "https://api.coop.nl/INTERSHOP/rest/WFS/COOP-2800-Site/",
-    "set_api_version": false,
     "default_options": {
+		"set_api_version": false,
         "verbose": false
     }
 }

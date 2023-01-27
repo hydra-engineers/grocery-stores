@@ -2,8 +2,8 @@
     "id": "ah",
     "name": "Albert Heijn",
     "endpoint": "https://api.ah.nl/",
-    "set_api_version": false,
     "default_options": {
+		"set_api_version": false,
         "verbose": false
     },
     "additional_headers": {
