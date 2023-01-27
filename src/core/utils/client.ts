@@ -83,7 +83,8 @@ export class Client implements ClientMeta {
         this.options.set_api_version    = options?.set_api_version  || (this.default_options.set_api_version    || false);
         this.options.axios_config       = options?.axios_config     || undefined;
 
-        if (this.options.set_api_version) this.endpoint += `v${this.options.api_version}/`;
+        if (this.options.set_api_version)
+			this.endpoint += `v${this.options.api_version}/`;
 
         this.http = axios.create(this.options.axios_config || (this.id == "jumbo" ? {
             httpsAgent: new https.Agent({
